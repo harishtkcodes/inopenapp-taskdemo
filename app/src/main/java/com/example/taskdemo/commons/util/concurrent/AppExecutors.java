@@ -12,8 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class AppExecutors {
 
-    public static final ExecutorService BOUNDED     = Executors.newFixedThreadPool(4, new NumberedThreadFactory("pepulnow-bounded"));
-    public static final ExecutorService SERIAL      = Executors.newSingleThreadExecutor(new NumberedThreadFactory("pepulnow-serial"));
+    public static final ExecutorService BOUNDED     = Executors.newFixedThreadPool(4, new NumberedThreadFactory("taskdemo-bounded"));
+    public static final ExecutorService SERIAL      = Executors.newSingleThreadExecutor(new NumberedThreadFactory("taskdemo-serial"));
 
     private AppExecutors() {}
 

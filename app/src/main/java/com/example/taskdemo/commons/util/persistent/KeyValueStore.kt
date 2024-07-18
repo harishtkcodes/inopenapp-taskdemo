@@ -12,7 +12,7 @@ class KeyValueStore(
     private val storage: KeyValuePersistentStorage
 ) : KeyValueReader {
 
-    private val executor:       ExecutorService = AppExecutors.newCachedSingleThreadExecutor("pepul-keyValueStore")
+    private val executor:       ExecutorService = AppExecutors.newCachedSingleThreadExecutor("taskdemo-keyValueStore")
 
     private var dataSet: KeyValueDataSet? = null
 

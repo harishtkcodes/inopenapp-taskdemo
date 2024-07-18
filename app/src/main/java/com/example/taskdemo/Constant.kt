@@ -2,8 +2,8 @@ package com.example.taskdemo
 
 object Constant {
     const val PLATFORM = "android"
-    const val PRIVACY_POLICY_URL    = "https://shopsnm.com/terms#privacy"
-    const val TERMS_URL             = "https://shopsnm.com/terms"
+    const val PRIVACY_POLICY_URL    = ""
+    const val TERMS_URL             = ""
 
     const val PROGRESS = "progress"
 

@@ -43,6 +43,14 @@
     <color name="backdrop_primary_old">#33FAAD14</color>
     <color name="backdrop_primary">#FBEFD3</color>
 
+    <color name="brand_blue">#0E6FFF</color>
+    <color name="brand_blue_100">#5E9FFF</color>
+    <color name="brand_blue_700">#0141A0</color>
+    <color name="whatsapp_brand_color">#4AD15F</color>
+
+    <color name="purple_200">#5C33CF</color>
+    <color name="red_200">#FF4E64</color>
+
     <color name="blue_grey_50">#ECEFF1</color>
     <color name="blue_grey_400">#78909C</color>
     <color name="blue_grey_800">#37474F</color>

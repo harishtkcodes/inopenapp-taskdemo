@@ -24,18 +24,18 @@
     </style>
 
     <style name="TextAppearance.App.Label" parent="TextAppearance.Material3.LabelSmall">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="fontFamily">@font/figtree_regular</item>
+        <item name="android:fontFamily">@font/figtree_regular</item>
     </style>
 
     <style name="TextAppearance.App.TabItem.Selected" parent="TextAppearance.App.LabelMedium">
-        <item name="fontFamily">@font/poppins_semi_bold</item>
-        <item name="android:fontFamily">@font/poppins_semi_bold</item>>
+        <item name="fontFamily">@font/figtree_semi_bold</item>
+        <item name="android:fontFamily">@font/figtree_semi_bold</item>>
     </style>
 
     <style name="TextAppearance.App.TabItem" parent="TextAppearance.App.LabelMedium">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="fontFamily">@font/figtree_regular</item>
+        <item name="android:fontFamily">@font/figtree_regular</item>
     </style>
 
     <!-- App bars -->
@@ -75,13 +75,13 @@
     </style>
 
     <style name="TextAppearance.App.BottomBarLabel.Active" parent="TextAppearance.Material3.LabelSmall">
-        <item name="fontFamily">@font/poppins_semi_bold</item>
-        <item name="android:fontFamily">@font/poppins_semi_bold</item>
+        <item name="fontFamily">@font/figtree_regular</item>
+        <item name="android:fontFamily">@font/figtree_regular</item>
     </style>
 
     <style name="TextAppearance.App.BottomBarLabel.InActive" parent="TextAppearance.Material3.LabelSmall">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="fontFamily">@font/figtree_regular</item>
+        <item name="android:fontFamily">@font/figtree_regular</item>
     </style>
 
     <!-- Cards -->
@@ -747,271 +747,6 @@
         <item name="cornerSize">@dimen/corner_size_small</item>
     </style>
 
-    <style name="TextStyle.Medium" parent="Base.TextAppearance">
-        <item name="android:textSize">@dimen/text_size_medium</item>
-    </style>
-
-    <style name="TextStyle.Medium.Bold" parent="Base.TextAppearance.Bold">
-        <item name="android:textSize">@dimen/text_size_medium</item>
-    </style>
-
-    <style name="TextStyle.Medium.Heavy" parent="Base.TextAppearance.Heavy">
-        <item name="android:textSize">@dimen/text_size_medium</item>
-    </style>
-
-    <style name="TextStyle.Minute" parent="Base.TextAppearance">
-        <item name="android:textSize">@dimen/text_size_minute</item>
-    </style>
-
-    <style name="TextStyle.Tiny" parent="Base.TextAppearance">
-        <item name="android:textSize">@dimen/text_size_tiny</item>
-    </style>
-
-    <style name="TextStyle.Tiny.SemiBold" parent="Base.TextAppearance.SemiBold">
-        <item name="android:textSize">@dimen/text_size_tiny</item>
-    </style>
-
-    <style name="TextStyle.Tiny.Bold" parent="Base.TextAppearance.Bold">
-        <item name="android:textSize">@dimen/text_size_tiny</item>
-    </style>
-
-    <style name="TextStyle.Small" parent="Base.TextAppearance">
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-
-    <style name="TextStyle.Small.Bold" parent="Base.TextAppearance.Bold">
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-
-    <style name="TextStyle.Small.Heavy" parent="Base.TextAppearance.Heavy">
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-
-    <style name="TextStyle.VerySmall" parent="Base.TextAppearance">
-        <item name="android:textSize">@dimen/text_size_very_small</item>
-    </style>
-
-    <style name="TextStyle.VerySmall.Medium" parent="Base.TextAppearance.Medium">
-        <item name="android:textSize">@dimen/text_size_very_small</item>
-    </style>
-
-    <style name="TextStyle.VerySmall.SemiBold" parent="Base.TextAppearance.SemiBold">
-        <item name="android:textSize">@dimen/text_size_very_small</item>
-    </style>
-
-    <style name="TextStyle.VerySmall.Bold" parent="Base.TextAppearance.Bold">
-        <item name="android:textSize">@dimen/text_size_very_small</item>
-    </style>
-
-    <style name="TextStyle.VerySmall.Heavy" parent="Base.TextAppearance.Heavy">
-        <item name="android:textSize">@dimen/text_size_very_small</item>
-    </style>
-
-    <style name="TextStyle.Large" parent="Base.TextAppearance">
-        <item name="android:textSize">@dimen/text_size_large</item>
-    </style>
-
-    <style name="TextStyle.Large.Bold" parent="Base.TextAppearance.Bold">
-        <item name="android:textSize">@dimen/text_size_large</item>
-    </style>
-
-    <style name="TextStyle.Huge.Bold" parent="Base.TextAppearance.Bold">
-        <item name="android:textSize">@dimen/text_size_huge</item>
-    </style>
-
-    <style name="TextStyle.Huge" parent="Base.TextAppearance">
-        <item name="android:textSize">@dimen/text_size_huge</item>
-    </style>
-
-    <style name="TextStyle.Large.Heavy" parent="Base.TextAppearance.Heavy">
-        <item name="android:textSize">@dimen/text_size_large</item>
-    </style>
-
-    <style name="Base.TextAppearance.Light" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/poppins_light</item>
-        <item name="android:fontFamily">@font/poppins_light</item>
-    </style>
-
-    <style name="Base.TextAppearance.SemiBold" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/poppins_semi_bold</item>
-        <item name="android:fontFamily">@font/poppins_semi_bold</item>
-    </style>
-
-    <style name="Base.TextAppearance.Bold" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/poppins_bold</item>
-        <item name="android:fontFamily">@font/poppins_bold</item>
-    </style>
-
-    <style name="Base.TextAppearance.Heavy" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/poppins_black</item>
-        <item name="android:fontFamily">@font/poppins_black</item>
-    </style>
-
-    <style name="Base.TextAppearance.Medium" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/poppins_medium</item>
-        <item name="android:fontFamily">@font/poppins_medium</item>
-    </style>
-
-    <style name="Base.TextAppearance" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.HeadLineLarge" parent="TextAppearance.Material3.HeadlineLarge">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.HeadLineMedium" parent="TextAppearance.Material3.HeadlineMedium">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.HeadLineSmall" parent="TextAppearance.Material3.HeadlineSmall">
-        <item name="fontFamily">@font/poppins_semi_bold</item>
-        <item name="android:fontFamily">@font/poppins_semi_bold</item>
-    </style>
-
-    <style name="TextAppearance.App.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
-        <item name="fontFamily">@font/poppins_semi_bold</item>
-        <item name="android:fontFamily">@font/poppins_semi_bold</item>
-    </style>
-
-    <style name="TextAppearance.App.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
-        <item name="fontFamily">@font/poppins_semi_bold</item>
-        <item name="android:fontFamily">@font/poppins_semi_bold</item>
-    </style>
-
-    <style name="TextAppearance.App.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
-        <item name="fontFamily">@font/poppins_semi_bold</item>
-        <item name="android:fontFamily">@font/poppins_semi_bold</item>
-    </style>
-
-    <style name="TextAppearance.App.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
-        <item name="fontFamily">@font/poppins_semi_bold</item>
-        <item name="android:fontFamily">@font/poppins_semi_bold</item>
-    </style>
-
-    <style name="TextAppearance.App.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
-        <item name="fontFamily">@font/poppins_semi_bold</item>
-        <item name="android:fontFamily">@font/poppins_semi_bold</item>
-    </style>
-
-    <style name="TextAppearance.App.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.BodySmall" parent="TextAppearance.Material3.BodySmall">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.Body1" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.Body2" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
-        <item name="fontFamily">@font/poppins_light</item>
-        <item name="android:fontFamily">@font/poppins_light</item>
-    </style>
-
-    <style name="TextAppearance.App.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="fontFamily">@font/poppins_medium</item>
-        <item name="android:fontFamily">@font/poppins_medium</item>
-    </style>
-
-    <style name="TextAppearance.App.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="fontFamily">@font/poppins_medium</item>
-        <item name="android:fontFamily">@font/poppins_medium</item>
-    </style>
-
-    <style name="TextAppearance.App.Caption" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.Button" parent="TextAppearance.MaterialComponents.Button">
-        <item name="fontFamily">@font/poppins_medium</item>
-        <item name="android:fontFamily">@font/poppins_medium</item>
-    </style>
-
-    <style name="TextAppearance.App.Overline" parent="TextAppearance.MaterialComponents.Overline">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.Tooltip" parent="TextAppearance.MaterialComponents.Tooltip">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="TextAppearance.App.Title" parent="TextAppearance.AppCompat.Title">
-        <item name="fontFamily">@font/poppins_bold</item>
-        <item name="android:fontFamily">@font/poppins_bold</item>
-    </style>
-
-    <style name="TextAppearance.App.Toolbar.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="fontFamily">@font/poppins_semi_bold</item>
-        <item name="android:fontFamily">@font/poppins_semi_bold</item>
-    </style>
-
     <style name="Base.Theme.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="snackbarStyle">@style/Widget.App.SnackBar</item>
         <item name="snackbarButtonStyle">@style/Widget.App.SnackBarButton</item>
@@ -1061,44 +796,6 @@
 
         <item name="badgeStyle">@style/Widget.App.Badge</item>
 
-        <item name="textAppearanceHeadline1">@style/TextAppearance.App.Headline1</item>
-        <item name="textAppearanceHeadline2">@style/TextAppearance.App.Headline2</item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.App.Headline3</item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.App.Headline4</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.App.Headline5</item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.App.Headline6</item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.App.Subtitle1</item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.App.Subtitle2</item>
-        <item name="textAppearanceBody1">@style/TextAppearance.App.Body1</item>
-        <item name="textAppearanceBody2">@style/TextAppearance.App.Body2</item>
-        <item name="textAppearanceCaption">@style/TextAppearance.App.Caption</item>
-        <item name="textAppearanceButton">@style/TextAppearance.App.Button</item>
-        <item name="textAppearanceOverline">@style/TextAppearance.App.Overline</item>
-
-        <!-- Material 3 -->
-        <item name="textAppearanceDisplayLarge">@style/TextAppearance.App.DisplayLarge</item>
-        <item name="textAppearanceDisplayMedium">@style/TextAppearance.App.DisplayMedium</item>
-        <item name="textAppearanceDisplaySmall">@style/TextAppearance.App.DisplaySmall</item>
-
-        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.App.HeadLineLarge</item>
-        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.App.HeadLineMedium</item>
-        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.App.HeadLineSmall</item>
-
-        <item name="textAppearanceTitleLarge">@style/TextAppearance.App.TitleLarge</item>
-        <item name="textAppearanceTitleMedium">@style/TextAppearance.App.TitleMedium</item>
-        <item name="textAppearanceTitleSmall">@style/TextAppearance.App.TitleSmall</item>
-
-        <item name="textAppearanceLabelLarge">@style/TextAppearance.App.LabelLarge</item>
-        <item name="textAppearanceLabelMedium">@style/TextAppearance.App.LabelMedium</item>
-        <item name="textAppearanceLabelSmall">@style/TextAppearance.App.LabelSmall</item>
-
-        <item name="textAppearanceBodyLarge">@style/TextAppearance.App.BodyLarge</item>
-        <item name="textAppearanceBodyMedium">@style/TextAppearance.App.BodyMedium</item>
-        <item name="textAppearanceBodySmall">@style/TextAppearance.App.BodySmall</item>
-        <!-- END - Material 3 -->
-    </style>
-
-    <style name="Base.Typography" parent="">
         <item name="textAppearanceHeadline1">@style/TextAppearance.App.Headline1</item>
         <item name="textAppearanceHeadline2">@style/TextAppearance.App.Headline2</item>
         <item name="textAppearanceHeadline3">@style/TextAppearance.App.Headline3</item>

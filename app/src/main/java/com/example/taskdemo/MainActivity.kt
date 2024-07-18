@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
@@ -14,18 +16,38 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.forEach
+import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import androidx.window.layout.WindowMetricsCalculator
+import com.example.taskdemo.commons.util.AnimationUtil.animationListener
+import com.example.taskdemo.core.designsystem.component.MyBottomAppBarState
 import com.example.taskdemo.core.di.AppDependencies
 import com.example.taskdemo.databinding.ActivityMainBinding
+import com.example.taskdemo.eventbus.UnAuthorizedEvent
 import com.example.taskdemo.extensions.Log.tag
 import com.example.taskdemo.extensions.getDisplaySize
+import com.example.taskdemo.extensions.launchWhenStarted
+import com.example.taskdemo.extensions.showToast
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 import java.lang.ref.WeakReference
 
@@ -34,6 +56,7 @@ enum class WindowSizeClass { COMPACT, MEDIUM, EXPANDED }
 private const val WINDOW_SOFT_INPUT_MODE_ADJUST_NOTHING = 0
 private const val WINDOW_SOFT_INPUT_MODE_ADJUST_PAN = 1
 private const val WINDOW_SOFT_INPUT_MODE_ADJUST_RESIZE = 2
+private const val WINDOW_SOFT_INPUT_MODE_SYSTEM_BARS_ONLY = 3
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
@@ -77,7 +100,17 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupWindowSizeClass(binding.root)
+        setupObservers()
+        setupLifecycleObservers()
 
+        binding.apply {
+            appBottomNavigationView.doOnApplyWindowInsets { view, windowInsetsCompat, initialPadding ->
+                val navBarInsets = windowInsetsCompat.getInsets(WindowInsetsCompat.Type.navigationBars())
+                view.updatePadding(
+                    bottom = navBarInsets.bottom + initialPadding.bottom
+                )
+            }
+        }
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
             /*sdkAtLeastR {
                 val imeHeight = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
@@ -144,7 +177,37 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             if (consumed) WindowInsetsCompat.CONSUMED else windowInsets
         }
 
-        setNavGraph(R.id.routing_page)
+        setNavGraph(R.id.dashboard_graph)
+    }
+
+    private fun ActivityMainBinding.bindBottomBarState(
+        bottomAppBarState: MyBottomAppBarState,
+    ) {
+        Timber.d("bindBottomBarState() called with: myBottomAppBarState = [$bottomAppBarState]")
+        // val animDuration = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
+        if (appBottomNavigationView.isVisible && bottomAppBarState.hidden) {
+            // hide
+            // appBottomNavigationView.isVisible = false
+            AnimationUtils.loadAnimation(this@MainActivity, R.anim.slide_bottom).apply {
+                duration = ENTER_ANIMATION_DURATION
+                interpolator = LinearOutSlowInInterpolator()
+                animationListener(onAnimationEnd = { appBottomNavigationView.isVisible = false })
+            }.also(appBottomNavigationView::startAnimation)
+        } else {
+            // show
+            appBottomNavigationView.isVisible = true
+
+            AnimationUtils.loadAnimation(this@MainActivity, R.anim.slide_up).apply {
+                duration = EXIT_ANIMATION_DURATION
+                interpolator = FastOutLinearInInterpolator()/*this.setAnimationListener(
+                    AnimationUtil.animationListener(
+                        onAnimationEnd = {
+                            bottomBarProfileImage.isVisible = true
+                        }
+                    )
+                )*/
+            }.also(appBottomNavigationView::startAnimation)
+        }
     }
 
     private fun setNavGraph(
@@ -157,6 +220,24 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         if (!this@MainActivity::mainNavController.isInitialized) {
             mainNavController = navHostFragment.navController
             mainNavController.addOnDestinationChangedListener(this@MainActivity)
+
+            findViewById<BottomNavigationView>(R.id.app_bottom_navigation_view).apply {
+                setupWithNavController(mainNavController)
+                /*setOnItemSelectedListener {
+                    NavigationUI.onNavDestinationSelected(it, mainNavController)
+                    true
+                }*/
+                setOnItemReselectedListener { menuItem ->
+                    Timber.d("Navbar: onItemReselected id=${menuItem.itemId}")
+                    if (menuItem.itemId == R.id.dashboard_graph) {
+                        Timber.d("Navbar: sending scroll signal..")
+                        sharedViewModel.setHomeScrollToTop(true)
+                    }
+
+                    sharedViewModel.setBottomBarReselected(menuItem.itemId)
+                }
+
+            }
         }
 
         val inflater = navHostFragment.navController.navInflater
@@ -169,6 +250,64 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             jumpToDestinationArgs?.let(startDestinationArgs::putAll)
             mainNavController.setGraph(graph, startDestinationArgs)
         }
+    }
+
+    private fun setupObservers() {
+        sharedViewModel.myBottomAppBarStateState.onEach { state ->
+            binding.bindBottomBarState(state)
+        }.launchWhenStarted(lifecycleOwner = this) // Kinda sus!
+
+        sharedViewModel.isOffline.onEach { isOffline ->
+            val msg = if (isOffline) {
+                "Offline"
+            } else {
+                "Online"
+            }
+            Timber.d("Network: $msg")
+            if (isOffline) {
+                val bottomNavigationShown = !sharedViewModel.myBottomAppBarStateState.value.hidden
+                offlineSnackBarWeakRef = WeakReference(
+                    binding.root.showSnack(
+                        message = getString(R.string.you_are_offline_showing_limited_content),
+                        withBottomNavigation = bottomNavigationShown,
+                        autoCancel = false,
+                        showAction = true,
+                        actionTitle = getString(R.string.label_ok),
+                    )
+                )
+            } else {
+                offlineSnackBarWeakRef.get()?.dismiss()
+                offlineSnackBarWeakRef.clear()
+            }
+        }
+            .flowWithLifecycle(lifecycle)
+            .launchIn(lifecycleScope)
+
+        /*tasksSharedViewModel.taskUpdatesCount
+            .onEach { count ->
+                if (count == 0) {
+                    binding.oneappBottomNavigationView.removeBadge(R.id.tasks_graph)
+                } else {
+                    binding.oneappBottomNavigationView.getOrCreateBadge(R.id.tasks_graph).let { badgeDrawable ->
+                        badgeDrawable.text = count.asNotificationBadge()
+                    }
+                }
+            }
+            .flowWithLifecycle(lifecycle).launchIn(lifecycleScope)*/
+    }
+
+    private fun setupLifecycleObservers() {
+        lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onStart(owner: LifecycleOwner) {
+                EventBus.getDefault().register(this@MainActivity)
+
+                // checkNotificationPermissions()
+            }
+
+            override fun onStop(owner: LifecycleOwner) {
+                EventBus.getDefault().unregister(this@MainActivity)
+            }
+        })
     }
 
     private fun setupWindowSizeClass(root: ViewGroup) {
@@ -236,6 +375,36 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 }
             }
         }*/
+        when (destination.id) {
+            R.id.dashboard_overview_page, R.id.courses_overview_page, R.id.campaigns_overview_page, R.id.profile_overview_page -> {
+                windowSoftInputMode = WINDOW_SOFT_INPUT_MODE_ADJUST_NOTHING
+                sdkBelowT {
+                    @Suppress("DEPRECATION") window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                }
+            }
+
+            else -> {
+                windowSoftInputMode = WINDOW_SOFT_INPUT_MODE_ADJUST_RESIZE
+                sdkBelowT {
+                    @Suppress("DEPRECATION") window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                }
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onUnAuthorizedEvent(e: UnAuthorizedEvent) {
+        Timber.d("onUnAuthorizedEvent: $e")
+        // TODO: gracefully logout the user.
+        if (!AppDependencies.persistentStore?.deviceToken.isNullOrBlank()) {
+
+            // userViewModel.logout()
+            // googleSignInClient.signOut()
+
+            showToast(getString(R.string.session_expired_login_again))/* Will be handled automatically. See [MainActivityViewModel]*//*if (this::mainNavController.isInitialized) {
+                mainNavController.gotoOnboard()
+            }*/
+        }
     }
 
     /**

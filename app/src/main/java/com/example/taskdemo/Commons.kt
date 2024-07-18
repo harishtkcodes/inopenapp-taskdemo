@@ -269,7 +269,7 @@ fun tag(clazz: Class<*>): String {
 }
 
 fun parseUtmParameters(utmString: String): Map<String, String> {
-    // utm_campaign=GTVm5tFUsXvj&utm_medium=invite&utm_source=pepulnow
+    // utm_campaign=GTVm5tFUsXvj&utm_medium=invite&utm_source=copylink
     try {
         if (utmString.isBlank()) {
             return mapOf()
@@ -290,7 +290,7 @@ fun parseUtmParameters(utmString: String): Map<String, String> {
 }
 
 fun parseQueryParameters(url: String): Map<String, String> {
-    // utm_campaign=GTVm5tFUsXvj&utm_medium=invite&utm_source=pepulnow
+    // utm_campaign=GTVm5tFUsXvj&utm_medium=invite&utm_source=copylink
     try {
         if (url.isBlank()) {
             return mapOf()

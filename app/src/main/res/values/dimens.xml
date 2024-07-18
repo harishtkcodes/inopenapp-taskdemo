@@ -41,6 +41,7 @@
 
     <dimen name="button_corner_size">@dimen/corner_size_medium</dimen>
     <dimen name="default_fab_inset">25dp</dimen>
+    <dimen name="fab_inset_small">15dp</dimen>
 
     <dimen name="corner_size_tiny">2dp</dimen>
     <dimen name="corner_size_small">4dp</dimen>
@@ -52,8 +53,8 @@
     <dimen name="default_fab_elevation">4dp</dimen>
     <dimen name="large_fab_size">70dp</dimen>
 
-    <dimen name="shops_bottom_bar_size">52dp</dimen>
-    <dimen name="shops_nav_rail_size">52dp</dimen>
+    <dimen name="default_bottom_bar_size">52dp</dimen>
+    <dimen name="default_nav_rail_size">52dp</dimen>
     <dimen name="default_top_destination_padding">52dp</dimen>
     <dimen name="default_bottom_sheet_radius">20dp</dimen>
     <dimen name="default_action_bar_size">48dp</dimen>

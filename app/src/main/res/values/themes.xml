@@ -10,22 +10,24 @@
     </style>
 
     <style name="Theme.ViewSystem" parent="Base.Theme.ViewSystem">
-        <item name="colorPrimary">@color/best_deals_green</item>
-        <item name="colorPrimaryContainer">@color/best_deals_light</item>
+        <item name="colorPrimary">@color/brand_blue</item>
+        <item name="colorPrimaryContainer">@color/brand_blue_100</item>
         <item name="colorOnPrimaryContainer">@color/black</item>
-        <item name="colorPrimaryDark">@color/best_deals_green700</item>
+        <item name="colorPrimaryDark">@color/brand_blue_700</item>
 
         <item name="isLightTheme">true</item>
         <item name="android:isLightTheme" tools:targetApi="Q">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowTranslucentStatus">false</item>
     </style>
 
     <style name="Theme.ViewSystem.Light" parent="Base.Theme.ViewSystem">
-        <item name="colorPrimary">@color/best_deals_green</item>
-        <item name="colorPrimaryContainer">@color/best_deals_light</item>
-        <item name="colorPrimaryDark">@color/best_deals_green700</item>
+        <item name="colorPrimary">@color/brand_blue</item>
+        <item name="colorPrimaryContainer">@color/brand_blue_100</item>
+        <item name="colorPrimaryDark">@color/brand_blue_700</item>
         <item name="colorSecondary">@color/black</item>
         <item name="colorOnBackground">@color/black</item>
 
@@ -46,13 +48,13 @@
 
     <style name="Theme.WebView" parent="Base.Theme.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/best_deals_green700a30</item>
+        <item name="colorPrimary">@color/brand_blue_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSurfaceVariant">@color/white_grey</item>
         <item name="colorOnSurfaceInverse">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/best_deals_green</item>
-        <item name="colorSecondaryVariant">@color/best_deals_green700</item>
+        <item name="colorSecondary">@color/brand_blue</item>
+        <item name="colorSecondaryVariant">@color/brand_blue_700</item>
         <item name="colorOnSecondary">@color/black</item>
 
         <!-- Status bar color. -->
@@ -68,8 +70,8 @@
         <item name="colorPrimaryVariant">@color/material_bluegrey900</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/best_deals_green</item>
-        <item name="colorSecondaryVariant">@color/best_deals_green700</item>
+        <item name="colorSecondary">@color/brand_blue</item>
+        <item name="colorSecondaryVariant">@color/brand_blue_700</item>
         <item name="colorOnSecondary">@color/black</item>
 
         <item name="android:windowBackground">@color/transparent</item>
@@ -86,20 +88,20 @@
     </style>
 
     <style name="ThemeOverlay.App.IconButton" parent="ThemeOverlay.Material3.Button.IconButton">
-        <item name="colorPrimary">@color/best_deals_green</item>
-        <item name="android:colorPrimary">@color/best_deals_green</item>
+        <item name="colorPrimary">@color/brand_blue</item>
+        <item name="android:colorPrimary">@color/brand_blue</item>
         <item name="colorOnPrimary">@color/core_white</item>
     </style>
 
     <style name="ThemeOverlay.App.Button" parent="ThemeOverlay.Material3.Button">
-        <item name="colorPrimary">@color/best_deals_green</item>
-        <item name="android:colorPrimary">@color/best_deals_green</item>
+        <item name="colorPrimary">@color/brand_blue</item>
+        <item name="android:colorPrimary">@color/brand_blue</item>
         <item name="colorOnPrimary">@color/core_white</item>
     </style>
 
     <style name="ThemeOverlay.App.Button.Variant" parent="ThemeOverlay.Material3.Button">
-        <item name="colorPrimary">@color/best_deals_green</item>
-        <item name="android:colorPrimary">@color/best_deals_green</item>
+        <item name="colorPrimary">@color/brand_blue</item>
+        <item name="android:colorPrimary">@color/brand_blue</item>
         <item name="colorOnPrimary">@color/core_black</item>
     </style>
 
@@ -158,9 +160,9 @@
     </style>
 
     <style name="ThemeOverlay.App.Dialog" parent="">
-        <item name="colorPrimary">@color/best_deals_green</item>
+        <item name="colorPrimary">@color/brand_blue</item>
         <item name="colorPrimaryContainer">@color/best_deals_light</item>
-        <item name="colorPrimaryDark">@color/best_deals_green700</item>
+        <item name="colorPrimaryDark">@color/brand_blue_700</item>
         <item name="colorSecondary">@color/black</item>
 
         <item name="colorOnSurface">@color/white</item>
@@ -190,13 +192,13 @@
 
     <!-- Progress Indicator -->
     <style name="ThemeOverlay.App.ProgressIndicator" parent="">
-        <item name="android:colorPrimary">@color/best_deals_green</item>
-        <item name="colorPrimary">@color/best_deals_green</item>
+        <item name="android:colorPrimary">@color/brand_blue</item>
+        <item name="colorPrimary">@color/brand_blue</item>
     </style>
 
     <!-- ContentLoadingProgress -->
     <style name="ThemeOverlay.App.ContentLoadingProgressBar" parent="">
-        <item name="colorAccent">@color/best_deals_green</item>
+        <item name="colorAccent">@color/brand_blue</item>
     </style>
 
     <style name="ThemeOverlay.App.ContentLoadingProgressBar.Alt" parent="">
@@ -217,7 +219,7 @@
     </style>
 
     <style name="ThemeOverlay.App.Card" parent="">
-        <item name="colorPrimary">@color/best_deals_green</item>
+        <item name="colorPrimary">@color/brand_blue</item>
         <item name="colorSurface">@color/best_deals_green100</item>
         <item name="colorOnSurface">@color/black</item>
     </style>
@@ -269,10 +271,10 @@
     </style>
 
     <style name="ThemeOverlay.App.Button.Outline.Alt" parent="ThemeOverlay.Material3.Button">
-        <item name="colorPrimary">@color/best_deals_green</item>
-        <item name="colorOutline">@color/best_deals_green</item>
-        <item name="colorContainer">@color/best_deals_green700a10</item>
-        <item name="colorOnContainer">@color/best_deals_green</item>
+        <item name="colorPrimary">@color/brand_blue</item>
+        <item name="colorOutline">@color/brand_blue</item>
+        <item name="colorContainer">@color/brand_blue_700</item>
+        <item name="colorOnContainer">@color/brand_blue</item>
     </style>
 
     <style name="ThemeOverlay.App.Button.TextButton.Icon" parent="ThemeOverlay.Material3.Button.TextButton">
@@ -281,17 +283,18 @@
     <!-- END - Buttons -->
 
     <!-- App bars -->
-    <style name="ThemeOverlay.App.Toolbar" parent="ThemeOverlay.Material3.Toolbar.Surface">
+    <style name="ThemeOverlay.App.Toolbar" parent="">
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black</item>
         <item name="colorOnSurfaceVariant">@color/black_900</item>
     </style>
 
-    <style name="ThemeOverlay.App.Toolbar.Transparent" parent="ThemeOverlay.Material3.Toolbar.Surface">
+    <style name="ThemeOverlay.App.Toolbar.Transparent" parent="">
         <item name="colorSurface">@color/transparent</item>
-        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
         <item name="colorOnSurfaceVariant">@color/blue_grey_50</item>
     </style>
+
     <!-- END - Appbars -->
 
     <!-- SnackBar -->

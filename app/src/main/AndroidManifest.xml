@@ -29,7 +29,6 @@
             </intent-filter>
         </activity>
 
-        <!-- This will be done manually using [com.pepul.shops.app.sync.initializers.SyncInitializer] -->
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"

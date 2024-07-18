@@ -1,5 +1,5 @@
 package com.example.taskdemo.commons.util.imageloader;/*
-package com.pepul.shopping.commons.util.imageloader;
+package com.example.taskdemo.commons.util.imageloader;
 
 import android.content.Context;
 import android.os.Handler;
