@@ -1,6 +1,5 @@
 package com.example.taskdemo.feature.home.presentation.util
 
-import android.content.Context
 import kotlin.random.Random
 
 private val randomEmojis: List<String> by lazy {
@@ -15,13 +14,13 @@ private val randomDescriptions: List<String> by lazy {
     )
 }
 
-fun getRandomEmoji(context: Context): String {
+fun getRandomEmoji(): String {
     val (min, max) = 0 to randomEmojis.size - 1
     val index = Random.Default.nextInt(min, max + 1)
     return randomEmojis[index]
 }
 
-fun getRandomDescription(context: Context): String {
+fun getRandomDescription(): String {
     val (min, max) = 0 to randomDescriptions.size - 1
     val index = Random.Default.nextInt(min, max + 1)
     return randomDescriptions[index]

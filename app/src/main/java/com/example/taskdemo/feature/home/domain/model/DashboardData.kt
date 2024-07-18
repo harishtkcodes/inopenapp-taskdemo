@@ -17,4 +17,22 @@ data class DashboardData(
     val topLinks: List<OpenAppLink>?,
     val favouriteLinks: List<OpenAppLink>?,
     val overallUrlChart: JsonObject?
-)
+) {
+    companion object {
+        val EMPTY = DashboardData(
+            supportWhatsappNumber = "",
+            extraIncome = 0.0,
+            totalLinks = 0,
+            totalClicks = 0,
+            topSource = "",
+            topLocation = "",
+            startTime = "",
+            linksCreatedToday = 0,
+            appliedCampaign = 0,
+            recentLinks = null,
+            topLinks = null,
+            favouriteLinks = null,
+            overallUrlChart = null
+        )
+    }
+}

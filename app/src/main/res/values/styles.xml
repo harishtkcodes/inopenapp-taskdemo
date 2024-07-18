@@ -747,6 +747,16 @@
         <item name="cornerSize">@dimen/corner_size_small</item>
     </style>
 
+    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/corner_size_large</item>
+    </style>
+
+    <style name="ShapeAppearance.App.ExtraLargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/corner_size_xlarge</item>
+    </style>
+
     <style name="Base.Theme.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="snackbarStyle">@style/Widget.App.SnackBar</item>
         <item name="snackbarButtonStyle">@style/Widget.App.SnackBarButton</item>

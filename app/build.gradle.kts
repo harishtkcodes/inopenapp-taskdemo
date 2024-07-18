@@ -165,6 +165,9 @@ dependencies {
     }
     ksp(libs.glide.compiler)
 
+    /* Facebook Shimmer */
+    implementation(libs.facebook.shimmer)
+
     /* Timber */
     implementation(libs.timber)
 

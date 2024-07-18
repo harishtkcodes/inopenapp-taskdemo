@@ -8,17 +8,32 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.example.taskdemo.MainActivity
 import com.example.taskdemo.R
 import com.example.taskdemo.WindowSizeClass
 import com.example.taskdemo.databinding.FragmentDashboardBinding
 import com.example.taskdemo.doOnApplyWindowInsets
+import com.example.taskdemo.extensions.showToast
 import com.example.taskdemo.feature.home.presentation.util.GreetingMessage
 import com.example.taskdemo.feature.home.presentation.util.TimeOfDay
 import com.example.taskdemo.feature.home.presentation.util.getRandomDescription
 import com.example.taskdemo.feature.home.presentation.util.getRandomEmoji
+import com.example.taskdemo.showSnack
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
+@AndroidEntryPoint
 class DashboardFragment : Fragment() {
+
+    private val viewModel: DashboardViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,18 +65,33 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentDashboardBinding.bind(view)
 
-        binding.bindState()
+        binding.bindState(
+            uiModels = viewModel.uiModels,
+            uiEvent = viewModel.uiEvent,
+            uiAction = viewModel.accept
+        )
     }
 
-    private fun FragmentDashboardBinding.bindState() {
+    private fun FragmentDashboardBinding.bindState(
+        uiModels: StateFlow<List<DashboardUiModel>>,
+        uiEvent: SharedFlow<DashboardUiEvent>,
+        uiAction: (DashboardUiAction) -> Unit
+    ) {
+        uiEvent.onEach { event ->
+            when (event) {
+                is DashboardUiEvent.ShowSnack -> {
+                    root.showSnack(event.message.asString(requireContext()), withBottomNavigation = true)
+                }
 
-        val timeOfDay = TimeOfDay.current
-        val greetingMessage = GreetingMessage(
-            title = timeOfDay.greetingMessage,
-            description = getRandomDescription(requireContext()), /* "It's time to something awesome! 🤩" */
-            leadingEmojiText = timeOfDay.emoji,
-            trailingEmojiText = getRandomEmoji(requireContext()),
-        )
+                is DashboardUiEvent.ShowToast -> {
+                    context?.showToast(event.message.asString(requireContext()))
+                }
+
+                // TODO: Handle other navigation related events
+            }
+        }
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
 
         bindAppBar()
     }
@@ -98,5 +128,9 @@ class DashboardFragment : Fragment() {
                 )
             }
         }
+    }
+
+    private fun initGlide(): RequestManager {
+        return Glide.with(requireContext())
     }
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:minWidth="120dp"
+    app:layout_constrainedHeight="true"
+    app:layout_constraintDimensionRatio="H,1:1"
+    app:strokeWidth="0dp"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="0dp"
+    android:elevation="0dp"
+    app:cardBackgroundColor="@color/white">
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/inset_small">
+        
+        <FrameLayout android:id="@+id/icon_group"
+            android:layout_width="@dimen/xxlarge_icon_size"
+            android:layout_height="@dimen/xxlarge_icon_size"
+            android:layout_marginBottom="@dimen/inset_small"
+            android:background="@drawable/bg_rounded_30"
+            android:backgroundTint="@color/brand_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_title"
+            app:layout_constraintHorizontal_bias="0.0">
+            
+            <ImageView
+                android:layout_width="@dimen/medium_icon_size"
+                android:layout_height="@dimen/medium_icon_size"
+                android:src="@drawable/ic_location_pin_outline"
+                android:layout_gravity="center"
+                android:contentDescription="Icon" />
+            
+        </FrameLayout>
+        
+        <TextView android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/inset_small"
+            android:textAppearance="?attr/textAppearanceTitleSmall"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textAlignment="viewStart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icon_group"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_subtitle"
+            tools:text="Ahamedabad" />
+
+        <TextView android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="?attr/colorSecondary"
+            android:text="Top Location"
+            android:textAlignment="viewStart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icon_group"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_subtitle" />
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
