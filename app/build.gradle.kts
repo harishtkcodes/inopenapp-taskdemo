@@ -74,8 +74,8 @@ android {
         create("dev") {
             dimension = "default"
 
-            buildConfigField("String", "BASE_URL", "\"https://seller.hifrds.com\"")
-            buildConfigField("String", "API_URL", "\"https://seller.hifrds.com/api/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.inopenapp.com\"")
+            buildConfigField("String", "API_URL", "\"https://api.inopenapp.com/api/v1/\"")
             buildConfigField("String", "ENV", "\"dev\"")
             buildConfigField("boolean", "IS_SECURED", "false")
             versionNameSuffix = "-dev${Ext.versionRevision}"
@@ -84,8 +84,8 @@ android {
         create("internal") {
             dimension = "default"
 
-            buildConfigField("String", "BASE_URL", "\"https://pepzoondev.hifrds.com\"")
-            buildConfigField("String", "API_URL", "\"https://pepzoondev.hifrds.com/api/v4/\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.inopenapp.com\"")
+            buildConfigField("String", "API_URL", "\"https://api.inopenapp.com/api/v1/\"")
             buildConfigField("String", "ENV", "\"internal\"")
             buildConfigField("boolean", "IS_SECURED", "false")
             versionNameSuffix = "-internal"
@@ -94,8 +94,8 @@ android {
         create("prod") {
             dimension = "default"
 
-            buildConfigField("String", "BASE_URL", "\"https://shops.storesnearme.in\"")
-            buildConfigField("String", "API_URL", "\"https://shops.storesnearme.in/api/v3/\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.inopenapp.com\"")
+            buildConfigField("String", "API_URL", "\"https://api.inopenapp.com/api/v1/\"")
             buildConfigField("String", "ENV", "\"prod\"")
             buildConfigField("boolean", "IS_SECURED", "true")
         }
@@ -154,6 +154,7 @@ dependencies {
     /* Retrofit */
     implementation(libs.retrofit2)
     implementation(libs.retrofit2.converter.gson)
+    implementation(libs.retrofit.kotlin.serialization)
     implementation(libs.okhttp3.logging.interceptor)
 
     /* Glide */

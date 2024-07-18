@@ -63,6 +63,7 @@ palette = "1.0.0"
 protobuf = "3.25.2"
 protobufPlugin = "0.9.0"
 retrofit = "2.11.0"
+retrofitKotlinxSerializationJson = "1.0.0"
 room = "2.6.1"
 socketIo = "2.0.0"
 splashScreen = "1.1.0-rc01"
@@ -181,6 +182,7 @@ protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref 
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit2-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 retrofit2-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
+retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
 socketio-client = { module = "io.socket:socket.io-client", version.ref = "socketIo" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 threetenabp = { module = "com.jakewharton.threetenabp:threetenabp", version.ref = "threetenabp" }
