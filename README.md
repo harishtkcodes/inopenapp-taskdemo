@@ -14,4 +14,4 @@ The demo for the received Task on the mail.
 
 ## Demo Video
 
-<p align="center"><img src="./docs/InOpenapp Demo.mp4" alt="InOpenapp Demo mp4" /></p>
+<p align="center"><img src="./docs/InOpenAppDemo.gif" alt="InOpenAppDemo gif" /></p>
