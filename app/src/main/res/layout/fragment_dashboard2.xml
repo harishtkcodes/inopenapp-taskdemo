@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
     android:id="@+id/parent"
+    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -15,7 +16,7 @@
         android:layout_marginStart="0dp"
         app:liftOnScroll="false"
         app:statusBarForeground="@android:color/transparent"
-        android:background="@color/transparent">
+        android:theme="@style/ThemeOverlay.App.AppBarLayout.Transparent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
@@ -117,6 +118,7 @@
         android:id="@+id/scroll_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="100dp"
         android:background="@drawable/bg_curved_top"
         android:backgroundTint="@color/material_grey100"
         android:fillViewport="true"
@@ -138,7 +140,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.0">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/header_card"
@@ -240,7 +243,9 @@
                             android:id="@+id/overall_stat_container"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:padding="@dimen/inset_small"
                             android:orientation="horizontal"
+                            android:background="@drawable/bg_curved"
                             android:layout_marginTop="@dimen/inset_very_large"
                             app:layout_goneMarginBottom="@dimen/inset_small"
                             app:layout_constraintStart_toStartOf="parent"
@@ -250,12 +255,61 @@
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="120dp"
+                                android:layout_height="200dp"
                                 android:background="@drawable/bg_deals_shimmer_curved"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent" />
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:visibility="gone"/>
+
+                            <TextView android:id="@+id/tv_chart_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/inset_small"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?attr/textSecondary"
+                                android:text="@string/overview"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/btn_chart_timeline"
+                                app:layout_constraintBottom_toTopOf="@id/bottom_barrier"
+                                app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_chart_timeline"
+                                style="?attr/materialIconButtonOutlinedStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="22 Aug - 22 Sept"
+                                android:textColor="?attr/textPrimary"
+                                app:icon="@drawable/ic_clock_outline"
+                                app:iconGravity="textEnd"
+                                app:iconTint="?attr/textSecondary"
+                                app:shapeAppearanceOverlay="?attr/shapeAppearanceCornerSmall"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_chart_title"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/bottom_barrier" />
+
+                            <androidx.constraintlayout.widget.Barrier
+                                android:id="@+id/bottom_barrier"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:barrierDirection="top"
+                                app:barrierMargin="@dimen/inset_medium"
+                                app:constraint_referenced_ids="line_chart"/>
+
+                            <com.github.mikephil.charting.charts.LineChart
+                                android:id="@+id/line_chart"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:layout_marginTop="@dimen/inset_large"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/bottom_barrier"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:visibility="visible" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -466,7 +520,8 @@
                         style="?attr/materialIconButtonFilledStyle"
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
-                        android:layout_margin="@dimen/inset_large"
+                        android:layout_marginVertical="@dimen/inset_small"
+                        android:layout_marginHorizontal="@dimen/inset_large"
                         android:text="@string/talk_with_us"
                         app:icon="@drawable/brand_whatsapp"
                         app:iconTint="@color/whatsapp_brand_color"
@@ -486,8 +541,9 @@
                         style="?attr/materialIconButtonFilledStyle"
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
-                        android:layout_margin="@dimen/inset_large"
-                        android:text="@string/talk_with_us"
+                        android:layout_marginVertical="@dimen/inset_small"
+                        android:layout_marginHorizontal="@dimen/inset_large"
+                        android:text="@string/frequently_asked_questions"
                         app:icon="@drawable/ic_help_outline"
                         app:iconTint="?attr/colorPrimary"
                         app:iconGravity="start"

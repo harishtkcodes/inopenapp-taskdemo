@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.utils.toSetOrEmpty
-
 /* Git: Empty commit marker \0 */
 plugins {
     alias(libs.plugins.android.application)
@@ -177,7 +175,10 @@ dependencies {
     /* Event Bus */
     implementation(libs.eventbus)
 
+    // implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
     /* External Projects */
+    implementation(project(":external:MPChartLib"))
     /* END - External Projects */
 
     // Core library

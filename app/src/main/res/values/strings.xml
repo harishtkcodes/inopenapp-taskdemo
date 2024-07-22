@@ -47,6 +47,7 @@
     <string name="campaign_overview">Campaigns Overview</string>
     <string name="profile_overview">Profile Overview</string>
     <string name="create_description">Let\'s create something fun!</string>
+    <string name="overview">Overview</string>
 
     <string-array name="english_week_string_array">
         <item>Sun</item>

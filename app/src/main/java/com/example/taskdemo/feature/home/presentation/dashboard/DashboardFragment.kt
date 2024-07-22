@@ -3,6 +3,7 @@ package com.example.taskdemo.feature.home.presentation.dashboard
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,12 @@ import com.example.taskdemo.feature.home.domain.model.DashboardData
 import com.example.taskdemo.feature.home.domain.model.OpenAppLink
 import com.example.taskdemo.setOnSingleClickListener
 import com.example.taskdemo.showSnack
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.YAxis.AxisDependency
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.SharedFlow
@@ -63,7 +70,8 @@ class DashboardFragment : Fragment() {
             } else {
                 it.setPadding(topLevelDestinationPaddingPx, 0, 0, 0)
             }
-            it.doOnApplyWindowInsets { view, windowInsetsCompat, initialPadding ->
+            val scrollParent = it.findViewById<View>(R.id.scroll_parent)
+            scrollParent.doOnApplyWindowInsets { view, windowInsetsCompat, initialPadding ->
                 val navbarInsets = windowInsetsCompat.getInsets(WindowInsetsCompat.Type.navigationBars())
                 val imeInsets = windowInsetsCompat.getInsets(WindowInsetsCompat.Type.ime())
                 view.updatePadding(
@@ -405,6 +413,45 @@ class DashboardFragment : Fragment() {
         }.also(greetingLeadingIcon::startAnimation)
 
         btnViewAnalytics.setOnSingleClickListener { onViewAnalyticsClick() }
+
+        // block:start:chart
+        // TODO: draw the chart
+        val values1 = arrayListOf<Entry>().apply {
+            data.dashboardData.overallUrlChart?.onEachIndexed { index, chartKVPair ->
+                add(Entry(index.toFloat(), chartKVPair.value.toFloat(), chartKVPair.key))
+            }
+        }
+
+
+        // create a dataset and give it a type
+        val set1 = LineDataSet(values1, "Clicks")
+
+        val primaryColor = MaterialColors.getColor(
+            root,
+            com.google.android.material.R.attr.colorPrimary
+        )
+
+        set1.setAxisDependency(AxisDependency.RIGHT)
+        set1.setColor(primaryColor)
+        set1.setCircleColor(Color.WHITE)
+        set1.setLineWidth(2f)
+        set1.setCircleRadius(0f)
+        set1.setFillAlpha(65)
+        set1.setFillColor(primaryColor)
+        set1.fillDrawable = ResourcesCompat.getDrawable(resources, R.drawable.bg_gradient_from_top, requireContext().theme)
+        /*set1.setHighLightColor(
+            MaterialColors.getColor(
+                root,
+                com.google.android.material.R.attr.colorError
+            )
+        )*/
+        set1.setDrawCircleHole(false)
+        set1.setDrawCircles(false)
+        set1.setDrawFilled(true)
+        set1.setDrawValues(false)
+        lineChart.description = Description().apply { text = "" }
+        lineChart.data = LineData(set1)
+        // block:end:chart
     }
 
     private fun FragmentDashboard2Binding.bindTabsLayout(

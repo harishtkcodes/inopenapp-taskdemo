@@ -40,6 +40,22 @@
         app:layout_constraintVertical_chainStyle="spread_inside"
         tools:visibility="visible" />
 
+    <FrameLayout android:id="@+id/fab_container"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:padding="@dimen/inset_small"
+        android:layout_marginBottom="36dp"
+        android:layout_gravity="bottom|center"
+        android:elevation="3dp"
+        android:background="@drawable/bg_rounded"
+        android:backgroundTint="@color/brand_blue_05"
+        android:outlineProvider="none"
+        android:visibility="gone">
+
+
+
+    </FrameLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_create"
         android:layout_width="wrap_content"
@@ -47,8 +63,11 @@
         android:layout_marginBottom="36dp"
         android:src="@drawable/baseline_add_24"
         app:tint="?attr/colorOnPrimary"
+        android:background="@drawable/bg_fab_create"
         android:layout_gravity="bottom|center"
         android:contentDescription="@string/content_description_create"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Circle" />
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Circle"
+        android:outlineProvider="none" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

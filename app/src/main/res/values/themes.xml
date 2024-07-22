@@ -39,6 +39,8 @@
 
         <!-- custom attrs -->
         <item name="colorOnPrimaryInverse">@color/black</item>
+        <item name="textPrimary">@color/black</item>
+        <item name="textSecondary">@color/text_secondary</item>
         <!-- END - custom attrs -->
 
         <item name="isLightTheme">true</item>
@@ -315,6 +317,11 @@
     <!-- END - Buttons -->
 
     <!-- App bars -->
+    <style name="ThemeOverlay.App.AppBarLayout.Transparent" parent="">
+        <item name="colorSurface">@android:color/transparent</item>
+        <item name="colorSurfaceContainer">@color/brand_blue_05</item>
+    </style>
+
     <style name="ThemeOverlay.App.Toolbar" parent="">
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black</item>

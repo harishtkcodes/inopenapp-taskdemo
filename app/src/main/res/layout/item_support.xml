@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_margin="@dimen/inset_large"
-        android:text="@string/talk_with_us"
+        android:text="@string/frequently_asked_questions"
         app:icon="@drawable/ic_help_outline"
         app:iconTint="?attr/colorPrimary"
         app:iconGravity="start"

@@ -179,9 +179,30 @@ class LinksAdapter(
             onCopyLink: (String) -> Unit,
         ) = with(binding) {
             tvTitle.text = data.title
-            tvSubtitle.text = data.createdAt
             tvLink.text = data.smartLink
             tvTotalClicks.text = data.totalClicks.toString()
+
+            /*try {
+                tvSubtitle.isVisible = true
+                if (data.createdAt.isNullOrBlank()) {
+                    tvSubtitle.text = data.timesAgo
+                } else {
+                    val ldt = DateUtil.parseUtcString(data.createdAt).toLocalDateTime()
+                    tvSubtitle.text = StringBuilder().apply {
+                        append(DateUtil.getSimpleDate(ldt))
+                        append(" \u2022 ")
+                        append(DateUtil.getDateFormat(ldt, "hh:mm a"))
+
+                        *//*if (taskComment.isEdited) {
+                            append(" \u2022 ")
+                            append(" " + root.resources.getString(R.string.edited))
+                        }*//*
+                    }
+                }
+            } catch (e: Exception) {
+                tvSubtitle.text = "Just Now"
+            }*/
+            tvSubtitle.text = data.timesAgo
 
             glide.load(data.originalImage)
                 .into(ivIcon)

@@ -1,6 +1,9 @@
 package com.example.taskdemo.feature.home.di
 
+import com.example.taskdemo.core.di.RepositorySource
+import com.example.taskdemo.core.di.RepositorySources
 import com.example.taskdemo.feature.home.data.repository.DefaultInOpenAppRepository
+import com.example.taskdemo.feature.home.data.repository.FakeOpenInAppRepository
 import com.example.taskdemo.feature.home.data.source.inmemory.InMemoryInOpenAppDataSource
 import com.example.taskdemo.feature.home.data.source.remote.InOpenAppRemoteDataSource
 import com.example.taskdemo.feature.home.data.source.remote.NetworkInOpenAppRemoteDataSource
@@ -17,8 +20,15 @@ import javax.inject.Singleton
 interface InOpenAppRepositoryModule {
 
     @Binds
-    fun bindsInOpenAppRepository(
+    @RepositorySource(RepositorySources.Default)
+    fun bindsDefaultInOpenAppRepository(
         inOpenAppRepository: DefaultInOpenAppRepository
+    ): InOpenAppRepository
+
+    @Binds
+    @RepositorySource(RepositorySources.Fake)
+    fun bindsFakeInOpenAppRepository(
+        inOpenAppRepository: FakeOpenInAppRepository
     ): InOpenAppRepository
 
     @Binds

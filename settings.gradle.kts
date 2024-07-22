@@ -3,6 +3,8 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+
+        maven("https://jitpack.io")
     }
 }
 dependencyResolutionManagement {
@@ -23,3 +25,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Task Demo"
 include(":app")
+include(":external:MPChartLib")

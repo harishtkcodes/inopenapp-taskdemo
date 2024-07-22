@@ -33,7 +33,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.window.layout.WindowMetricsCalculator
 import com.example.taskdemo.commons.util.AnimationUtil.animationListener
-import com.example.taskdemo.commons.util.windowinsets.TranslateDeferringInsetsAnimationCallback
 import com.example.taskdemo.core.designsystem.component.MyBottomAppBarState
 import com.example.taskdemo.core.di.AppDependencies
 import com.example.taskdemo.databinding.ActivityMainBinding
@@ -113,13 +112,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 )
             }
 
-            val insetsListener = TranslateDeferringInsetsAnimationCallback(
-                fabCreate,
-                WindowInsetsCompat.Type.systemBars(),
-                0
-            )
-            ViewCompat.setWindowInsetsAnimationCallback(fabCreate, insetsListener)
-
             val fabInsetPx = resources.getDimensionPixelSize(R.dimen.default_fab_inset)
             fabCreate.doOnApplyWindowInsets { view, windowInsetsCompat, _ ->
                 val initialMarginBottom = fabCreate.marginBottom
@@ -128,6 +120,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                     bottom = navInset + initialMarginBottom
                 )*/
                 view.translationY = -(navInset.toFloat())
+                fabContainer.translationY = -(navInset.toFloat())
             }
         }
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->

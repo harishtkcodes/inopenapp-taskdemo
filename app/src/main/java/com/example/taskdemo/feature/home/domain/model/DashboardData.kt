@@ -13,7 +13,7 @@ data class DashboardData(
     val recentLinks: List<OpenAppLink>,
     val topLinks: List<OpenAppLink>,
     val favouriteLinks: List<OpenAppLink>,
-    val overallUrlChart: Any?
+    val overallUrlChart: List<ChartKVPair>?
 ) {
     companion object {
         val EMPTY = DashboardData(
@@ -29,7 +29,7 @@ data class DashboardData(
             recentLinks = emptyList(),
             topLinks = emptyList(),
             favouriteLinks = emptyList(),
-            overallUrlChart = null
+            overallUrlChart = emptyList(),
         )
     }
 }

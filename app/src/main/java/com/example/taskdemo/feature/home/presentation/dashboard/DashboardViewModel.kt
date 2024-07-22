@@ -10,6 +10,8 @@ import com.example.taskdemo.commons.util.loadstate.LoadStates
 import com.example.taskdemo.commons.util.loadstate.LoadType
 import com.example.taskdemo.core.data.persistence.PersistentStore
 import com.example.taskdemo.core.designsystem.component.text.SimpleEditTextState
+import com.example.taskdemo.core.di.RepositorySource
+import com.example.taskdemo.core.di.RepositorySources
 import com.example.taskdemo.extensions.ifDebug
 import com.example.taskdemo.feature.home.domain.model.DashboardData
 import com.example.taskdemo.feature.home.domain.model.OpenAppLink
@@ -39,6 +41,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
+    @RepositorySource(RepositorySources.Fake)
     private val repository: InOpenAppRepository,
     private val persistentStore: PersistentStore,
     private val savedStateHandle: SavedStateHandle,

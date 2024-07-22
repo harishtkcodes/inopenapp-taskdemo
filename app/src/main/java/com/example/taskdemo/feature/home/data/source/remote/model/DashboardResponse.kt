@@ -1,6 +1,7 @@
 package com.example.taskdemo.feature.home.data.source.remote.model
 
 import com.example.taskdemo.feature.home.data.source.remote.dto.OpenAppLinkDto
+import com.example.taskdemo.feature.home.data.source.remote.model.dto.ChartKVPairDto
 import com.google.gson.annotations.SerializedName
 
 data class DashboardResponse(
@@ -35,7 +36,7 @@ data class DashboardResponse(
         @SerializedName("favourite_links")
         val favouriteLinks: List<OpenAppLinkDto>?,
         @SerializedName("overall_url_chart")
-        val overallUrlChart: Any?
+        val overallUrlChart: List<ChartKVPairDto>?
     )
 }
 

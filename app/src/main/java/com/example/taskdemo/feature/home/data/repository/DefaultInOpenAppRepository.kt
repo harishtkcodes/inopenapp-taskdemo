@@ -9,6 +9,8 @@ import com.example.taskdemo.feature.home.data.source.inmemory.InMemoryInOpenAppD
 import com.example.taskdemo.feature.home.data.source.remote.InOpenAppRemoteDataSource
 import com.example.taskdemo.feature.home.data.source.remote.dto.OpenAppLinkDto
 import com.example.taskdemo.feature.home.data.source.remote.dto.toOpenAppLink
+import com.example.taskdemo.feature.home.data.source.remote.model.dto.ChartKVPairDto
+import com.example.taskdemo.feature.home.data.source.remote.model.dto.toChartKVPair
 import com.example.taskdemo.feature.home.domain.model.DashboardData
 import com.example.taskdemo.feature.home.domain.repository.InOpenAppRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -48,7 +50,7 @@ class DefaultInOpenAppRepository @Inject constructor(
                             recentLinks = response.data?.recentLinks?.map(OpenAppLinkDto::toOpenAppLink) ?: emptyList(),
                             topLinks = response.data?.topLinks?.map(OpenAppLinkDto::toOpenAppLink) ?: emptyList(),
                             favouriteLinks = response.data?.favouriteLinks?.map(OpenAppLinkDto::toOpenAppLink) ?: emptyList(),
-                            overallUrlChart = response.data?.overallUrlChart
+                            overallUrlChart = response.data?.overallUrlChart?.map(ChartKVPairDto::toChartKVPair) ?: emptyList(),
                         )
                     }
                     localDataSource.setDashboardData(data)

@@ -45,6 +45,7 @@
 
     <color name="brand_blue">#0E6FFF</color>
     <color name="brand_blue_100">#5E9FFF</color>
+    <color name="brand_blue_05">#E6F0FF</color>
     <color name="brand_blue_100a30">#4D5E9FFF</color>
     <color name="brand_blue_700">#0141A0</color>
     <color name="whatsapp_brand_color">#4AD15F</color>
