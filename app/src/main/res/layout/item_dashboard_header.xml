@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:cardUseCompatPadding="true"
     app:strokeWidth="0dp"
-    app:contentPadding="@dimen/inset_small">
+    app:contentPadding="@dimen/inset_small"
+    app:cardBackgroundColor="@android:color/transparent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -139,7 +140,7 @@
             android:layout_margin="@dimen/inset_large"
             app:icon="@drawable/ic_arrow_raise"
             app:iconGravity="textStart"
-            android:text="View Analytics"
+            android:text="@string/view_analytics"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.MediumComponent.Rounded"
             app:strokeColor="?attr/colorOutlineVariant"
             app:layout_constraintStart_toStartOf="parent"

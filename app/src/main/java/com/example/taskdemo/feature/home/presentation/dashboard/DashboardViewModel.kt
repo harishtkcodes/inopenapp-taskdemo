@@ -8,8 +8,11 @@ import com.example.taskdemo.commons.util.UiText
 import com.example.taskdemo.commons.util.loadstate.LoadState
 import com.example.taskdemo.commons.util.loadstate.LoadStates
 import com.example.taskdemo.commons.util.loadstate.LoadType
+import com.example.taskdemo.core.data.persistence.PersistentStore
+import com.example.taskdemo.core.designsystem.component.text.SimpleEditTextState
 import com.example.taskdemo.extensions.ifDebug
 import com.example.taskdemo.feature.home.domain.model.DashboardData
+import com.example.taskdemo.feature.home.domain.model.OpenAppLink
 import com.example.taskdemo.feature.home.domain.repository.InOpenAppRepository
 import com.example.taskdemo.feature.home.presentation.util.GreetingMessage
 import com.example.taskdemo.feature.home.presentation.util.TimeOfDay
@@ -27,6 +30,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -36,8 +40,22 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val repository: InOpenAppRepository,
+    private val persistentStore: PersistentStore,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+
+    val tokenInputState by lazy {
+        SimpleEditTextState(
+            initialValue = persistentStore.deviceToken,
+            validator = { value -> value.isNotBlank() },
+            errorFor = { value ->
+                when {
+                    value.isBlank() -> "Token is required"
+                    else -> ""
+                }
+            }
+        )
+    }
 
     private val viewModelState = MutableStateFlow(DashboardState())
 
@@ -46,12 +64,12 @@ class DashboardViewModel @Inject constructor(
 
     val accept: (DashboardUiAction) -> Unit
 
-    val uiModels: StateFlow<List<DashboardUiModel>> = viewModelState
-        .map(DashboardState::toUiModels)
+    val uiState: StateFlow<DashboardUiState> = viewModelState
+        .map(DashboardState::toDashboardUiState)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = emptyList()
+            initialValue = viewModelState.value.toDashboardUiState()
         )
 
     private var dashboardDataFetchJob: Job? = null
@@ -66,6 +84,7 @@ class DashboardViewModel @Inject constructor(
                     )
                 }
             }
+            .onStart { refreshInternal() }
             .launchIn(viewModelScope)
 
         accept = { uiAction -> onUiAction(uiAction) }
@@ -74,7 +93,13 @@ class DashboardViewModel @Inject constructor(
     private fun onUiAction(action: DashboardUiAction) {
         when (action) {
             is DashboardUiAction.OnTabSelected -> {
-                handleTabSelectedInternal()
+                handleTabSelectedInternal(action.tab)
+            }
+            DashboardUiAction.SubmitAccessToken -> {
+                viewModelScope.launch {
+                    persistentStore.setDeviceToken(tokenInputState.text.value)
+                    sendEvent(DashboardUiEvent.ShowToast(UiText.DynamicString("Token saved")))
+                }
             }
             DashboardUiAction.Refresh -> {
                 refreshInternal()
@@ -86,8 +111,12 @@ class DashboardViewModel @Inject constructor(
         getDashboardDataInternal()
     }
 
-    private fun handleTabSelectedInternal() {
-        // TODO: handle tab item selection
+    private fun handleTabSelectedInternal(tab: DashboardTab) {
+        viewModelState.update { state ->
+            state.copy(
+                currentDashboardTab = tab
+            )
+        }
     }
 
     private fun getDashboardDataInternal() {
@@ -124,6 +153,10 @@ class DashboardViewModel @Inject constructor(
         viewModelState.update { it.copy(loadState = newLoadState) }
     }
 
+    private fun sendEvent(newEvent: DashboardUiEvent) = viewModelScope.launch {
+        _uiEvent.emit(newEvent)
+    }
+
 }
 
 private data class DashboardState(
@@ -131,6 +164,24 @@ private data class DashboardState(
     val dashboardData: DashboardData? = null,
 
     /* Other UI components */
+    val currentDashboardTab: DashboardTab = DashboardTab.TopLinks,
+) {
+    fun toDashboardUiState(): DashboardUiState {
+        return DashboardUiState(
+            loadState = loadState,
+            dashboardData = dashboardData,
+
+            currentDashboardTab = currentDashboardTab,
+        )
+    }
+}
+
+data class DashboardUiState(
+    val loadState: LoadStates = LoadStates.IDLE,
+    val dashboardData: DashboardData? = null,
+
+    /* Other UI components */
+    val currentDashboardTab: DashboardTab = DashboardTab.TopLinks,
 ) {
     fun toUiModels(): List<DashboardUiModel> {
         val timeOfDay = TimeOfDay.current
@@ -154,12 +205,15 @@ private data class DashboardState(
             add(header)
 
             val tabLayout = DashboardUiModel.DashboardTabLayout(
-                selectedTab = DashboardTab.TopLinks,
+                selectedTab = currentDashboardTab,
                 dashboardData = dashboardData ?: DashboardData.EMPTY
             )
             add(tabLayout)
 
-            add(DashboardUiModel.DashboardSupportFooter)
+            val footer = DashboardUiModel.DashboardSupportFooter(
+                whatsAppSupportNumber = dashboardData?.supportWhatsappNumber ?: ""
+            )
+            add(footer)
         }
     }
 }
@@ -168,19 +222,29 @@ interface DashboardUiModel {
     data class DashboardHeader(
         val userProfile: UserProfile,
         val greetingMessage: GreetingMessage,
-        val dashboardData: DashboardData?,
+        val dashboardData: DashboardData,
     ) : DashboardUiModel
 
     data class DashboardTabLayout(
         val selectedTab: DashboardTab,
-        val dashboardData: DashboardData?
+        val dashboardData: DashboardData
     ) : DashboardUiModel
 
-    data object DashboardSupportFooter : DashboardUiModel
+    data class DashboardSupportFooter(
+        val whatsAppSupportNumber: String,
+    ) : DashboardUiModel
 }
+
+fun DashboardUiModel.DashboardTabLayout.getLinksForActiveTab(): List<OpenAppLink> =
+    when (this.selectedTab) {
+        DashboardTab.TopLinks -> this.dashboardData.topLinks
+        DashboardTab.RecentLinks -> this.dashboardData.recentLinks
+        DashboardTab.FavoriteLinks -> this.dashboardData.favouriteLinks
+    }
 
 interface DashboardUiAction {
     data class OnTabSelected(val tab: DashboardTab) : DashboardUiAction
+    data object SubmitAccessToken : DashboardUiAction
     data object Refresh : DashboardUiAction
 }
 

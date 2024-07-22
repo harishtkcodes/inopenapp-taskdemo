@@ -166,4 +166,8 @@
     <dimen name="viewpager_decor_offset_default">20dp</dimen>
     <dimen name="viewpager_decor_margin_with_offset_default">30dp</dimen>
     <dimen name="btn_horizontal_inset">20dp</dimen>
+
+    <dimen name="default_list_container_max_height">300dp</dimen>
+    <dimen name="list_container_max_height_large">400dp</dimen>
+    <dimen name="list_container_max_height_very_large">500dp</dimen>
 </resources>

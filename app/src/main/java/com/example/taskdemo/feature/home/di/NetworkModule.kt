@@ -1,4 +1,4 @@
-package com.workfast.ai.app.feature.tasks.di
+package com.example.taskdemo.feature.home.di
 
 import com.example.taskdemo.BuildConfig
 import com.example.taskdemo.commons.util.gson.StringConverter
@@ -9,7 +9,7 @@ import com.example.taskdemo.commons.util.net.JwtInterceptor
 import com.example.taskdemo.commons.util.net.PlatformInterceptor
 import com.example.taskdemo.commons.util.net.UserAgentInterceptor
 import com.example.taskdemo.core.Env
-import com.example.taskdemo.core.data.persistence.DefaultPersistentStore
+import com.example.taskdemo.core.data.persistence.PersistentStore
 import com.example.taskdemo.core.envForConfig
 import com.example.taskdemo.eventbus.UnAuthorizedEvent
 import com.google.gson.Gson
@@ -32,7 +32,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideOkhttpCallFactory(
-        persistentStore: DefaultPersistentStore,
+        persistentStore: PersistentStore,
     ): okhttp3.Call.Factory {
         val okHttpClientBuilder = OkHttpClient.Builder()
             .connectTimeout(2, TimeUnit.MINUTES)

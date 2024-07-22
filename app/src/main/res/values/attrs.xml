@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorOnPrimaryInverse" format="reference|color" />
+
+    <!-- MaxHeightFrameLayout -->
+    <declare-styleable name="MaxHeightFrameLayout">
+        <attr name="android:maxHeight" format="reference|dimension" />
+    </declare-styleable>
+</resources>

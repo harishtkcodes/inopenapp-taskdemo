@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
 /**
- * A replica of Jetpack Compose's TextFieldState but with [MutableStateFlow]
+ * A replica of Jetpack Compose's TextFieldState but with [MutableStateFlow].
+ * !! We don't name as TextFieldState as it will clash with Jetpack Compose
  */
 open class EditTextState(
     private val validator: (String) -> Boolean = { true },
@@ -63,9 +64,10 @@ open class EditTextState(
         text.map { validator(it) }
 
     fun reset() {
-        text.update { "" }
-        isFocusedDirty.update { false }
-        displayErrors.update { false }
+        text.value = ""
+        isFocusedDirty.value = false
+        isFocused.value = false
+        displayErrors.value = false
     }
 
 }

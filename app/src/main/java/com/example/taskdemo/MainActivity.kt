@@ -1,7 +1,6 @@
 package com.example.taskdemo
 
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +10,14 @@ import android.view.animation.AnimationUtils
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
@@ -32,6 +33,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.window.layout.WindowMetricsCalculator
 import com.example.taskdemo.commons.util.AnimationUtil.animationListener
+import com.example.taskdemo.commons.util.windowinsets.TranslateDeferringInsetsAnimationCallback
 import com.example.taskdemo.core.designsystem.component.MyBottomAppBarState
 import com.example.taskdemo.core.di.AppDependencies
 import com.example.taskdemo.databinding.ActivityMainBinding
@@ -109,6 +111,23 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 view.updatePadding(
                     bottom = navBarInsets.bottom + initialPadding.bottom
                 )
+            }
+
+            val insetsListener = TranslateDeferringInsetsAnimationCallback(
+                fabCreate,
+                WindowInsetsCompat.Type.systemBars(),
+                0
+            )
+            ViewCompat.setWindowInsetsAnimationCallback(fabCreate, insetsListener)
+
+            val fabInsetPx = resources.getDimensionPixelSize(R.dimen.default_fab_inset)
+            fabCreate.doOnApplyWindowInsets { view, windowInsetsCompat, _ ->
+                val initialMarginBottom = fabCreate.marginBottom
+                val navInset = windowInsetsCompat.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+                /*view.updateMargins(
+                    bottom = navInset + initialMarginBottom
+                )*/
+                view.translationY = -(navInset.toFloat())
             }
         }
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
@@ -357,6 +376,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             }"
         )
         sharedViewModel.setCurrentDestination(destinationId = destination.id)
+        binding.fabCreate.isVisible = destination.id in bottomBarDestinations
         // Do something with [destination.id]
         /*when (destination.id) {
             *//* These have stciky footers so needs to be updated. *//*

@@ -11,7 +11,7 @@
     app:cardUseCompatPadding="true"
     app:cardElevation="0dp"
     android:elevation="0dp"
-    app:cardBackgroundColor="@color/white">
+    app:cardBackgroundColor="?attr/colorSurface">
     
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toTopOf="@id/tv_title"
             app:layout_constraintHorizontal_bias="0.0">
             
-            <ImageView
+            <ImageView android:id="@+id/iv_icon"
                 android:layout_width="@dimen/medium_icon_size"
                 android:layout_height="@dimen/medium_icon_size"
                 android:src="@drawable/ic_location_pin_outline"
@@ -47,6 +47,7 @@
             android:singleLine="true"
             android:ellipsize="end"
             android:textAlignment="viewStart"
+            android:textColor="?attr/colorOnSurface"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/icon_group"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +60,7 @@
             android:textAppearance="?attr/textAppearanceBodySmall"
             android:singleLine="true"
             android:ellipsize="end"
-            android:textColor="?attr/colorSecondary"
+            android:textColor="?attr/colorSecondaryFixedDim"
             android:text="Top Location"
             android:textAlignment="viewStart"
             app:layout_constraintStart_toStartOf="parent"

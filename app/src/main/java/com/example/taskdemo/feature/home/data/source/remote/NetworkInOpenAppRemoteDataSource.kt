@@ -6,11 +6,9 @@ import com.example.taskdemo.core.data.source.remote.BaseRemoteDataSource
 import com.example.taskdemo.core.util.NetworkMonitor
 import com.example.taskdemo.feature.home.data.source.remote.model.DashboardResponse
 import com.google.gson.Gson
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Lazy
 import kotlinx.serialization.json.Json
 import okhttp3.Call
-import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
@@ -31,9 +29,9 @@ class NetworkInOpenAppRemoteDataSource @Inject constructor(
         // We use callFactory lambda here with dagger.Lazy<Call.Factory>
         // to prevent initializing OkHttp on the main thread.
         .callFactory { okhttpCallFactory.get().newCall(it) }
-        .addConverterFactory(
+        /*.addConverterFactory(
             networkJson.asConverterFactory("application/json".toMediaType())
-        )
+        )*/
         .build().create(InOpenAppApi::class.java)
 
     override suspend fun dashboard(): NetworkResult<DashboardResponse> {

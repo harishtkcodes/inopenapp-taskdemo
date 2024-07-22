@@ -11,9 +11,35 @@
 
     <style name="Theme.ViewSystem" parent="Base.Theme.ViewSystem">
         <item name="colorPrimary">@color/brand_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryContainer">@color/brand_blue_100</item>
         <item name="colorOnPrimaryContainer">@color/black</item>
         <item name="colorPrimaryDark">@color/brand_blue_700</item>
+        <item name="colorSecondary">@color/core_yellow</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/material_yellow200</item>
+        <item name="colorOnSecondaryContainer">@color/black</item>
+        <item name="colorTertiary">@color/core_green</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorTertiaryContainer">@color/material_green400</item>
+        <item name="colorOnTertiaryContainer">@color/white</item>
+        <item name="colorError">@color/material_red400</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="colorErrorContainer">@color/material_redA100</item>
+        <item name="colorOnErrorContainer">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorSurfaceVariant">@color/white</item>
+        <item name="colorOnSurfaceVariant">@color/black_600</item>
+        <item name="colorSurfaceInverse">@color/black</item>
+        <item name="colorOnSurfaceInverse">@color/white</item>
+        <item name="colorOutline">@color/material_grey200</item>
+
+        <!-- custom attrs -->
+        <item name="colorOnPrimaryInverse">@color/black</item>
+        <!-- END - custom attrs -->
 
         <item name="isLightTheme">true</item>
         <item name="android:isLightTheme" tools:targetApi="Q">true</item>
@@ -208,6 +234,12 @@
     <!-- Bottom sheet -->
     <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomSheetDialog.Cut" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog.Cut</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent</item>
+        <item name="paddingBottomSystemWindowInsets">true</item>
     </style>
     <!-- END - Bottom sheet -->
 

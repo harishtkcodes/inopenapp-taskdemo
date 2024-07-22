@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout android:id="@+id/tab_layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/inset_small"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_search"
+        app:layout_constraintBottom_toTopOf="@id/top_barrier">
+
+        <com.google.android.material.tabs.TabLayout android:id="@+id/tab_layout"
+            style="@style/TabLayout.App"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorFullWidth="true"
+            android:hapticFeedbackEnabled="true"
+            android:clipToPadding="true"
+            app:tabTextAppearance="@style/TextAppearance.App.TabItem"
+            app:tabSelectedTextAppearance="@style/TextAppearance.App.TabItem.Selected"
+            app:tabSelectedTextColor="?attr/colorOnPrimary"
+            app:tabTextColor="@color/text_secondary"
+            app:tabIndicator="@drawable/tab_indicator_filled"
+            app:tabIndicatorColor="?attr/colorPrimary"
+            app:tabIndicatorHeight="36dp"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabIndicatorGravity="center"
+            app:tabGravity="start"
+            app:tabMode="scrollable"
+            app:tabRippleColor="@null"
+            app:tabMinWidth="120dp"
+            android:background="@android:color/transparent">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/top_links" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recent_links" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/favorite_links" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_surface_alt"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="8dp"
+            android:visibility="visible" />
+
+    </FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_search"
+        style="?attr/materialIconButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/inset_small"
+        app:shapeAppearanceOverlay="?attr/shapeAppearanceCornerMedium"
+        app:icon="@drawable/ic_search_outline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tab_layout_container"
+        app:layout_constraintBottom_toTopOf="@id/top_barrier"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/top_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tab_layout_container,btn_search"/>
+
+<!--    <com.example.taskdemo.view.MaxHeightFrameLayout-->
+<!--        android:id="@+id/list_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constrainedHeight="true"-->
+<!--        app:layout_constraintHeight_min="400dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/top_barrier"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/btn_view_all_links">-->
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/list_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:nestedScrollingEnabled="false"-->
+<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--            tools:itemCount="4"-->
+<!--            tools:listitem="@layout/item_link_card" />-->
+
+<!--    </com.example.taskdemo.view.MaxHeightFrameLayout>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_view_all_links"
+        tools:itemCount="4"
+        tools:listitem="@layout/item_link_card" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_view_all_links"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/inset_large"
+        app:icon="@drawable/ic_arrow_raise"
+        app:iconGravity="textStart"
+        android:text="@string/view_all_links"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.MediumComponent.Rounded"
+        app:strokeColor="?attr/colorOutlineVariant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/list_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_container_max_height_very_large"
+        android:orientation="horizontal"
+        app:layout_constrainedHeight="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,12 +15,33 @@
 
     <string name="label_ok">OK</string>
     <string name="label_cancel">Cancel</string>
+    <string name="retry">Retry</string>
+    <string name="type_something">Type Something</string>
+    <string name="hey_wait">Hey Wait!</string>
+    <string name="confirm">Confirm</string>
+    <string name="changes_will_be_lost">The changes will be lost</string>
+    <string name="reset_to_defaults_confirmation">Reset all settings to default?</string>
+    <string name="enter_title">Enter Title</string>
+    <string name="cancel">Cancel</string>
 
     <string name="links">Links</string>
     <string name="dashboard">Dashboard</string>
     <string name="courses">Courses</string>
     <string name="campaigns">Campaigns</string>
     <string name="profile">Profile</string>
+
+    <string name="total_clicks">Total Clicks</string>
+    <string name="top_location">Top Location</string>
+    <string name="top_source">Top Source</string>
+    <string name="top_links">Top Links</string>
+    <string name="recent_links">Recent Links</string>
+    <string name="favorite_links">Favorite Links</string>
+    <string name="clicks">Clicks</string>
+    <string name="view_analytics">View Analytics</string>
+    <string name="view_all_links">View All Links</string>
+    <string name="talk_with_us">Talk with us</string>
+    <string name="frequently_asked_questions">Frequently Asked Questions</string>
+    <string name="copied_to_clipboard">Copied to clipboard.</string>
 
     <string name="courses_overview">Courses Overview</string>
     <string name="campaign_overview">Campaigns Overview</string>

@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import java.util.UUID
+import javax.inject.Inject
 
 class DefaultPersistentStore(
     private val preferences: SharedPreferences,

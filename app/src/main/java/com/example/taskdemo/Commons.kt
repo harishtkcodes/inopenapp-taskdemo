@@ -2,6 +2,7 @@ package com.example.taskdemo
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.graphics.*
 import android.graphics.drawable.GradientDrawable
 import android.media.MediaScannerConnection
@@ -13,6 +14,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.Size
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.annotation.Px
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -411,3 +413,10 @@ fun getGreetingMessage(): String {
         else -> "Hello"
     }
 }
+
+fun colorStateListOf(vararg mapping: Pair<IntArray, Int>): ColorStateList {
+    val (states, colors) = mapping.unzip()
+    return ColorStateList(states.toTypedArray(), colors.toIntArray())
+}
+
+fun colorStateListOf(@ColorInt color: Int) = ColorStateList.valueOf(color)

@@ -1,52 +1,50 @@
 package com.example.taskdemo.feature.home.data.source.remote.dto
 
 import com.example.taskdemo.feature.home.domain.model.OpenAppLink
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class OpenAppLinkDto(
-    @SerialName("url_id")
+    @SerializedName("url_id")
     val urlId: Long,
-    @SerialName("web_link")
-    val webLink: String,
-    @SerialName("smart_link")
-    val smartLink: String,
-    @SerialName("title")
+    @SerializedName("web_link")
+    val webLink: String?,
+    @SerializedName("smart_link")
+    val smartLink: String?,
+    @SerializedName("title")
     val title: String,
-    @SerialName("total_clicks")
+    @SerializedName("total_clicks")
     val totalClicks: Int,
-    @SerialName("original_image")
+    @SerializedName("original_image")
     val originalImage: String?,
     val thumbnail: String?,
-    @SerialName("times_ago")
-    val timesAgo: String,
-    @SerialName("created_at")
-    val createdAt: String,
-    @SerialName("domain_id")
-    val domainId: String,
-    @SerialName("url_prefix")
+    @SerializedName("times_ago")
+    val timesAgo: String?,
+    @SerializedName("created_at")
+    val createdAt: String?,
+    @SerializedName("domain_id")
+    val domainId: String?,
+    @SerializedName("url_prefix")
     val urlPrefix: String?,
-    @SerialName("url_suffix")
+    @SerializedName("url_suffix")
     val urlSuffix: String?,
-    @SerialName("app")
+    @SerializedName("app")
     val app: String,
-    @SerialName("is_favourite")
+    @SerializedName("is_favourite")
     val isFavourite: Boolean
 )
 
 fun OpenAppLinkDto.toOpenAppLink(): OpenAppLink {
     return OpenAppLink(
         urlId = urlId,
-        webLink = webLink,
-        smartLink = smartLink,
+        webLink = webLink ?: "",
+        smartLink = smartLink ?: "",
         title = title,
         totalClicks = totalClicks,
         originalImage = originalImage,
         thumbnail = thumbnail,
         timesAgo = timesAgo,
         createdAt = createdAt,
-        domainId = domainId,
+        domainId = domainId ?: "",
         urlPrefix = urlPrefix,
         urlSuffix = urlSuffix,
         app = app,

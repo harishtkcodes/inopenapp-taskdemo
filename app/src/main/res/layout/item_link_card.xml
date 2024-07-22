@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:minWidth="120dp"
+    app:strokeWidth="0dp"
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="?attr/colorSurface">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout android:id="@+id/icon_group"
+            android:layout_width="@dimen/giant_icon_size"
+            android:layout_height="@dimen/giant_icon_size"
+            android:layout_marginVertical="@dimen/inset_large"
+            android:layout_marginTop="@dimen/inset_large"
+            android:layout_marginStart="@dimen/inset_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/left_barrier"
+            app:layout_constraintBottom_toTopOf="@id/bottom_barrier"
+            app:layout_constraintHorizontal_bias="0.0">
+
+            <com.google.android.material.imageview.ShapeableImageView android:id="@+id/iv_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_location_pin_outline"
+                android:layout_gravity="center"
+                app:strokeColor="?attr/colorOutline"
+                app:strokeWidth="1dp"
+                app:shapeAppearanceOverlay="?attr/shapeAppearanceMediumComponent"
+                app:contentPadding="8dp"
+                android:contentDescription="Icon" />
+
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/left_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="icon_group"
+            app:barrierMargin="@dimen/inset_medium"/>
+
+        <TextView android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/inset_very_small"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textAlignment="viewStart"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintStart_toEndOf="@id/left_barrier"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/right_barrier"
+            app:layout_constraintBottom_toTopOf="@id/tv_subtitle"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Ahamedabad" />
+
+        <TextView android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/inset_very_small"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="Top Location"
+            android:textAlignment="viewStart"
+            android:textColor="@color/text_secondary"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintStart_toEndOf="@id/left_barrier"
+            app:layout_constraintEnd_toStartOf="@id/right_barrier"
+            app:layout_constraintBottom_toTopOf="@id/bottom_barrier" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/right_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="left"
+            app:constraint_referenced_ids="tv_total_clicks,tv_clicks_label"/>
+
+        <TextView android:id="@+id/tv_total_clicks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/inset_large"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            app:layout_constraintStart_toEndOf="@id/right_barrier"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_clicks_label"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="232"/>
+
+        <TextView android:id="@+id/tv_clicks_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clicks"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="@color/text_secondary"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_clicks"
+            app:layout_constraintStart_toStartOf="@id/tv_total_clicks"
+            app:layout_constraintEnd_toEndOf="@id/tv_total_clicks"
+            app:layout_constraintBottom_toTopOf="@id/bottom_barrier" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/bottom_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="link_container" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/link_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dotted_outline_curved_bottom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottom_barrier"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView android:id="@+id/tv_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/inset_medium"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorPrimary"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_copy_link"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                tools:text="https://example.bio.com/share" />
+
+            <ImageView android:id="@+id/iv_copy_link"
+                android:layout_width="@dimen/default_icon_size"
+                android:layout_height="@dimen/default_icon_size"
+                android:layout_margin="@dimen/inset_small"
+                android:src="@drawable/ic_copy_outline"
+                android:contentDescription="Copy Link"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_link"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
