@@ -13,11 +13,11 @@
         android:layout_height="match_parent"
         android:background="@color/material_grey100"
         app:defaultNavHost="true"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@id/app_bottom_navigation_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/app_bottom_navigation_view"
-        app:layout_constrainedHeight="true"
         tools:layout="@layout/fragment_stub" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -27,47 +27,47 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:visibility="visible"
+        app:backgroundTint="@color/bottom_nav_background_color"
+        app:itemIconSize="32dp"
         app:itemIconTint="@color/selectable_color_primary"
         app:itemTextColor="@color/selectable_color_primary"
-        app:itemIconSize="32dp"
-        app:backgroundTint="@color/primary"
-        app:menu="@menu/home_bottom_nav_menu"
         app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside"
+        app:menu="@menu/home_bottom_nav_menu"
         tools:visibility="visible" />
 
-    <FrameLayout android:id="@+id/fab_container"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:padding="@dimen/inset_small"
-        android:layout_marginBottom="36dp"
-        android:layout_gravity="bottom|center"
-        android:elevation="3dp"
-        android:background="@drawable/bg_rounded"
-        android:backgroundTint="@color/brand_blue_05"
-        android:outlineProvider="none"
-        android:visibility="gone">
-
-
-
-    </FrameLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_create"
+    <FrameLayout
+        android:id="@+id/fab_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:src="@drawable/baseline_add_24"
-        app:tint="?attr/colorOnPrimary"
-        android:background="@drawable/bg_fab_create"
         android:layout_gravity="bottom|center"
-        android:contentDescription="@string/content_description_create"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Circle"
-        android:outlineProvider="none" />
+        android:layout_marginBottom="@dimen/fab_inset_large"
+        android:background="@drawable/bg_rounded"
+        android:backgroundTint="@color/brand_blue_05"
+        android:elevation="6dp"
+        android:outlineProvider="none"
+        android:visibility="visible"
+        app:layout_anchor="@id/app_bottom_navigation_view"
+        app:layout_anchorGravity="top|center_horizontal">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_fab_create"
+            android:contentDescription="@string/content_description_create"
+            android:outlineProvider="none"
+            android:src="@drawable/baseline_add_24"
+            app:fabCustomSize="56dp"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Circle"
+            app:tint="?attr/colorOnPrimary" />
+
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

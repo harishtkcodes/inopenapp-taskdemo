@@ -22,6 +22,7 @@ import com.bumptech.glide.RequestManager
 import com.example.taskdemo.MainActivity
 import com.example.taskdemo.R
 import com.example.taskdemo.WindowSizeClass
+import com.example.taskdemo.bindWithLifecycle
 import com.example.taskdemo.commons.util.AnimationUtil.animationListener
 import com.example.taskdemo.commons.util.loadstate.LoadState
 import com.example.taskdemo.core.designsystem.component.TextBoxDialog
@@ -51,12 +52,17 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
+/**
+ * This class is responsible for displaying the dashboard screen.
+ *
+ * Note: This class is being optimized with GitHub Copilot.
+ */
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
 
     private val viewModel: DashboardViewModel by viewModels()
-
-    private var currentTabPosition: Int = -1
+    private var _binding: FragmentDashboard2Binding? = null
+    private val binding: FragmentDashboard2Binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,7 +93,7 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentDashboard2Binding.bind(view)
+        _binding = FragmentDashboard2Binding.bind(view)
 
         binding.bindState(
             uiState = viewModel.uiState,
@@ -479,7 +485,6 @@ class DashboardFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 // Noop.
                 tab?.position?.let { tabPosition ->
-                    currentTabPosition = tabPosition
                     when (tabPosition) {
                         TAB_TYPE_TOP_LINKS -> onTabSelected.invoke(
                             DashboardTab.TopLinks)
@@ -570,7 +575,10 @@ class DashboardFragment : Fragment() {
             onSend = onSubmit,
             hintText = "Enter Access Token",
             endIconRes = R.drawable.baseline_done_24
-        ).show()
+        ).apply {
+            show()
+            bindWithLifecycle(viewLifecycleOwner)
+        }
     }
 
     private fun copyToClip(content: String) {
@@ -585,6 +593,14 @@ class DashboardFragment : Fragment() {
 
     private fun initGlide(): RequestManager {
         return Glide.with(requireContext())
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.appbarLayout.removeOnOffsetChangedListener(null)
+        binding.tabLayout.clearOnTabSelectedListeners()
+        binding.linksListView.adapter = null // Clear the adapter
+        _binding = null
     }
 
     companion object {

@@ -31,5 +31,35 @@ data class DashboardData(
             favouriteLinks = emptyList(),
             overallUrlChart = emptyList(),
         )
+
+        fun create(
+            supportWhatsappNumber: String? = null,
+            extraIncome: Double = 0.0,
+            totalLinks: Int = 0,
+            totalClicks: Int = 0,
+            topSource: String? = null,
+            topLocation: String? = null,
+            startTime: String = "",
+            linksCreatedToday: Int = 0,
+            appliedCampaign: Int = 0,
+            recentLinks: List<OpenAppLink> = emptyList(),
+            topLinks: List<OpenAppLink> = emptyList(),
+            favouriteLinks: List<OpenAppLink> = emptyList(),
+            overallUrlChart: List<ChartKVPair>? = emptyList()
+        ) = DashboardData(
+            supportWhatsappNumber,
+            extraIncome,
+            totalLinks,
+            totalClicks,
+            topSource,
+            topLocation,
+            startTime,
+            linksCreatedToday,
+            appliedCampaign,
+            recentLinks,
+            topLinks,
+            favouriteLinks,
+            overallUrlChart
+        )
     }
 }

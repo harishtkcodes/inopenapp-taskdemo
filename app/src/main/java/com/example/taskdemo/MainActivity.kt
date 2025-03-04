@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -41,7 +42,14 @@ import com.example.taskdemo.extensions.Log.tag
 import com.example.taskdemo.extensions.getDisplaySize
 import com.example.taskdemo.extensions.launchWhenStarted
 import com.example.taskdemo.extensions.showToast
+import com.example.taskdemo.view.CircularEdgeCutout
+import com.example.taskdemo.view.CustomBottomAppBarTopEdgeTreatment
+import com.example.taskdemo.view.InvertedCradleBottomAppBarTopEdgeTreatment
+import com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.RoundedCornerTreatment
+import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -119,10 +127,16 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 /*view.updateMargins(
                     bottom = navInset + initialMarginBottom
                 )*/
-                view.translationY = -(navInset.toFloat())
-                fabContainer.translationY = -(navInset.toFloat())
+                // view.translationY = -(navInset.toFloat())
+                // fabContainer.translationY = -(navInset.toFloat())
+                binding.fabContainer.updateMargins(
+                    bottom = -navInset
+                )
             }
+            customizeBottomNavigationViewShape(appBottomNavigationView)
         }
+
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
             /*sdkAtLeastR {
                 val imeHeight = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
@@ -356,6 +370,34 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         Timber.d("Window: size width = $widthWindowSizeClass widthDp=$widthDp height = $heightWindowSizeClass heightDp=$heightDp")
         MainActivity.widthWindowSizeClass = widthWindowSizeClass
         MainActivity.heightWindowSizeClass = heightWindowSizeClass
+    }
+
+    private fun customizeBottomNavigationViewShape(bottomNavigationView: BottomNavigationView) {
+        bottomNavigationView.post {
+            val fabDiameter = resources.getDimension(R.dimen.fab_size)
+            val fabMargin = resources.getDimension(R.dimen.fab_inset_large)
+            val cradleVerticalOffset = resources.getDimension(R.dimen.cradle_vertical_offset)
+
+            // val topEdgeTreatment = BottomAppBarTopEdgeTreatment(fabDiameter, fabMargin, cradleVerticalOffset)
+            val topEdgeTreatment = InvertedCradleBottomAppBarTopEdgeTreatment(fabDiameter, 0f, cradleVerticalOffset)
+
+            val shapeAppearanceModel = ShapeAppearanceModel.builder()
+                .setAllCorners(RoundedCornerTreatment())
+                .setAllCornerSizes(resources.getDimension(R.dimen.bottom_nav_corner_radius))
+                // .setTopEdge(CircularEdgeCutout(bottomNavigationView.width / 2f, resources.getDimension(R.dimen.fab_size), resources.getDimension(R.dimen.fab_corner_radius)))
+                .setTopEdge(topEdgeTreatment)
+                .build()
+
+            val shapedDrawable = MaterialShapeDrawable(shapeAppearanceModel).apply {
+                fillColor = ContextCompat.getColorStateList(this@MainActivity, R.color.bottom_nav_background_color)
+                elevation = resources.getDimension(R.dimen.bottom_nav_elevation)
+            }
+
+            bottomNavigationView.background = shapedDrawable
+            bottomNavigationView.clipToOutline = false
+            bottomNavigationView.clipToPadding = false
+            binding.fabContainer.isVisible = true
+        }
     }
 
     override fun onDestinationChanged(

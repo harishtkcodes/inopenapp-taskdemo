@@ -43,11 +43,12 @@ hiltCompiler = "1.2.0"
 installReferrer = "2.2"
 junit = "4.13.2"
 juspay = "1.0.0-rc.01"
-kotlin = "1.9.20"
+kotlin = "1.9.23"
 ktlint = "0.40.0"
 ktserializationJson = "1.5.1"
 ktx = "1.13.1"
-ksp = "1.9.20-1.0.14"
+ksp = "1.9.23-1.0.20"
+leakCanary = "2.9.1"
 lifecycle = "2.8.3"
 lifecycleExt = "2.2.0"
 lionscribeLibphonenumber = "8.12.18.1"
@@ -173,6 +174,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "ktserializationJson" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 lionscribe-libphonenumber = { module = "com.lionscribe.open.libphonenumber:libphonenumber", version.ref = "lionscribeLibphonenumber" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 mukeshsolanki-otpview = { module = "com.github.mukeshsolanki.android-otpview-pinview:otpview", version.ref = "mukeshSolankiOtpView" }

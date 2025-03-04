@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.DiffUtil.ItemCallback
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.RequestManager
 import com.example.taskdemo.commons.util.imageloader.GlideImageLoader.Companion.disposeGlideLoad
@@ -18,6 +19,11 @@ import com.example.taskdemo.feature.home.domain.model.OpenAppLink
 import com.example.taskdemo.loadWithGlide
 import com.example.taskdemo.setOnSingleClickListener
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Locale
 
 class DashboardTabsAdapter(
     private val glide: RequestManager,
@@ -25,11 +31,11 @@ class DashboardTabsAdapter(
     private val onCopyLink: (String) -> Unit,
     private val onSearch: () -> Unit,
     private val onTabSelected: (DashboardTab) -> Unit,
-) : ListAdapter<DashboardUiModel.DashboardTabLayout, DashboardTabsAdapter.ItemViewHolder>(
-    DiffCallback) {
+    private val recycledViewPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool()
+) : ListAdapter<DashboardUiModel.DashboardTabLayout, DashboardTabsAdapter.ItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder.from(parent)
+        return ItemViewHolder.from(parent, recycledViewPool)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -38,9 +44,11 @@ class DashboardTabsAdapter(
     }
 
     class ItemViewHolder(
-        private val binding: ItemDashboardTabLayoutBinding
-    ) : ViewHolder(binding.root) {
+        private val binding: ItemDashboardTabLayoutBinding,
+        private val recycledViewPool: RecyclerView.RecycledViewPool
+    ) : RecyclerView.ViewHolder(binding.root) {
         private var currentTabPosition: Int = 0
+        private var tabSelectedListener: TabLayout.OnTabSelectedListener? = null
 
         fun bind(
             data: DashboardUiModel.DashboardTabLayout,
@@ -51,32 +59,20 @@ class DashboardTabsAdapter(
             onTabSelected: (DashboardTab) -> Unit
         ) = with(binding) {
 
-            when (data.selectedTab) {
-                DashboardTab.TopLinks -> {
-                    safeCall { tabLayout.getTabAt(TAB_TYPE_TOP_LINKS)?.select() }
-                }
-                DashboardTab.RecentLinks -> {
-                    safeCall { tabLayout.getTabAt(TAB_TYPE_RECENT_LINKS)?.select() }
-                }
-                DashboardTab.FavoriteLinks -> {
-                    safeCall { tabLayout.getTabAt(TAB_TYPE_FAV_LINKS)?.select() }
-                }
-            }
+            selectTab(data.selectedTab)
 
-            tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            tabSelectedListener = object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
-                    // Noop.
                     tab?.position?.let { tabPosition ->
                         currentTabPosition = tabPosition
-                        when (tabPosition) {
-                            TAB_TYPE_TOP_LINKS -> onTabSelected.invoke(DashboardTab.TopLinks)
-                            TAB_TYPE_RECENT_LINKS -> onTabSelected.invoke(DashboardTab.RecentLinks)
-                            TAB_TYPE_FAV_LINKS -> onTabSelected.invoke(DashboardTab.FavoriteLinks)
+                        val selectedTab = when (tabPosition) {
+                            TAB_TYPE_TOP_LINKS -> DashboardTab.TopLinks
+                            TAB_TYPE_RECENT_LINKS -> DashboardTab.RecentLinks
+                            TAB_TYPE_FAV_LINKS -> DashboardTab.FavoriteLinks
+                            else -> DashboardTab.TopLinks
                         }
+                        onTabSelected.invoke(selectedTab)
                     }
-                    /*if (defaultFriendsTab) {
-                        defaultFriendsTab = false
-                    }*/
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -86,18 +82,42 @@ class DashboardTabsAdapter(
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                     // Noop.
                 }
-            })
+            }
+            tabLayout.addOnTabSelectedListener(tabSelectedListener!!)
 
             val linksAdapter = LinksAdapter(
                 glide = glide,
                 onItemClick = onItemClick,
                 onCopyLink = onCopyLink
-            ).apply {
-                submitList(data.getLinksForActiveTab())
+            )
+            listView.apply {
+                adapter = linksAdapter
+                setRecycledViewPool(recycledViewPool)
             }
-            listView.adapter = linksAdapter
+
+            linksAdapter.submitList(data.getLinksForActiveTab())
 
             btnSearch.setOnSingleClickListener { onSearch() }
+        }
+
+        private fun ItemDashboardTabLayoutBinding.selectTab(tab: DashboardTab) {
+            when (tab) {
+                DashboardTab.TopLinks -> {
+                    safeCall { tabLayout.getTabAt(TAB_TYPE_TOP_LINKS)?.select() }
+                }
+
+                DashboardTab.RecentLinks -> {
+                    safeCall { tabLayout.getTabAt(TAB_TYPE_RECENT_LINKS)?.select() }
+                }
+
+                DashboardTab.FavoriteLinks -> {
+                    safeCall { tabLayout.getTabAt(TAB_TYPE_FAV_LINKS)?.select() }
+                }
+            }
+        }
+
+        fun onViewDetachedFromWindow() {
+            tabSelectedListener?.let { binding.tabLayout.removeOnTabSelectedListener(it) }
         }
 
         companion object {
@@ -105,30 +125,39 @@ class DashboardTabsAdapter(
             private const val TAB_TYPE_RECENT_LINKS = 1
             private const val TAB_TYPE_FAV_LINKS = 2
 
-            fun from(parent: ViewGroup): ItemViewHolder {
+            fun from(
+                parent: ViewGroup,
+                recycledViewPool: RecyclerView.RecycledViewPool
+            ): ItemViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ItemDashboardTabLayoutBinding.inflate(layoutInflater, parent, false)
-                return ItemViewHolder(binding)
+                return ItemViewHolder(binding, recycledViewPool)
             }
         }
     }
 
-    companion object {
-        private val DiffCallback = object : ItemCallback<DashboardUiModel.DashboardTabLayout>() {
-            override fun areItemsTheSame(
-                oldItem: DashboardUiModel.DashboardTabLayout,
-                newItem: DashboardUiModel.DashboardTabLayout
-            ): Boolean {
-                return oldItem.selectedTab == newItem.selectedTab
-            }
+    override fun onViewRecycled(holder: ItemViewHolder) {
+        super.onViewRecycled(holder)
+        holder.onViewDetachedFromWindow()
+    }
 
-            override fun areContentsTheSame(
-                oldItem: DashboardUiModel.DashboardTabLayout,
-                newItem: DashboardUiModel.DashboardTabLayout
-            ): Boolean {
-                return oldItem == newItem
+    companion object {
+        private val DiffCallback =
+            object : DiffUtil.ItemCallback<DashboardUiModel.DashboardTabLayout>() {
+                override fun areItemsTheSame(
+                    oldItem: DashboardUiModel.DashboardTabLayout,
+                    newItem: DashboardUiModel.DashboardTabLayout
+                ): Boolean {
+                    return oldItem.selectedTab == newItem.selectedTab
+                }
+
+                override fun areContentsTheSame(
+                    oldItem: DashboardUiModel.DashboardTabLayout,
+                    newItem: DashboardUiModel.DashboardTabLayout
+                ): Boolean {
+                    return oldItem == newItem
+                }
             }
-        }
     }
 }
 
@@ -170,7 +199,7 @@ class LinksAdapter(
 
     class ItemViewHolder(
         private val binding: ItemLinkCardBinding
-    ) : ViewHolder(binding.root), Recyclable {
+    ) : RecyclerView.ViewHolder(binding.root), Recyclable {
 
         fun bind(
             data: OpenAppLink,
@@ -180,28 +209,8 @@ class LinksAdapter(
         ) = with(binding) {
             tvTitle.text = data.title
             tvLink.text = data.smartLink
-            tvTotalClicks.text = data.totalClicks.toString()
+            tvTotalClicks.text = String.format(Locale.getDefault(), "%02d", data.totalClicks)
 
-            /*try {
-                tvSubtitle.isVisible = true
-                if (data.createdAt.isNullOrBlank()) {
-                    tvSubtitle.text = data.timesAgo
-                } else {
-                    val ldt = DateUtil.parseUtcString(data.createdAt).toLocalDateTime()
-                    tvSubtitle.text = StringBuilder().apply {
-                        append(DateUtil.getSimpleDate(ldt))
-                        append(" \u2022 ")
-                        append(DateUtil.getDateFormat(ldt, "hh:mm a"))
-
-                        *//*if (taskComment.isEdited) {
-                            append(" \u2022 ")
-                            append(" " + root.resources.getString(R.string.edited))
-                        }*//*
-                    }
-                }
-            } catch (e: Exception) {
-                tvSubtitle.text = "Just Now"
-            }*/
             tvSubtitle.text = data.timesAgo
 
             glide.load(data.originalImage)
@@ -226,7 +235,7 @@ class LinksAdapter(
     }
 
     companion object {
-        private val DiffCallback = object : ItemCallback<OpenAppLink>() {
+        private val DiffCallback = object : DiffUtil.ItemCallback<OpenAppLink>() {
             override fun areItemsTheSame(
                 oldItem: OpenAppLink,
                 newItem: OpenAppLink

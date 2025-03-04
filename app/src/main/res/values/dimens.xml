@@ -40,8 +40,9 @@
     <dimen name="inset_large_medium">14dp</dimen>
 
     <dimen name="button_corner_size">@dimen/corner_size_medium</dimen>
-    <dimen name="default_fab_inset">25dp</dimen>
-    <dimen name="fab_inset_small">15dp</dimen>
+    <dimen name="default_fab_inset">24dp</dimen>
+    <dimen name="fab_inset_large">36dp</dimen>
+    <dimen name="fab_inset_small">16dp</dimen>
 
     <dimen name="corner_size_tiny">2dp</dimen>
     <dimen name="corner_size_small">4dp</dimen>
@@ -170,4 +171,11 @@
     <dimen name="default_list_container_max_height">300dp</dimen>
     <dimen name="list_container_max_height_large">400dp</dimen>
     <dimen name="list_container_max_height_very_large">500dp</dimen>
+
+    <dimen name="fab_size">56dp</dimen>
+    <dimen name="bottom_nav_corner_radius">12dp</dimen>
+    <dimen name="bottom_nav_elevation">8dp</dimen>
+    <dimen name="fab_corner_radius">12dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="cradle_vertical_offset">8dp</dimen>
 </resources>

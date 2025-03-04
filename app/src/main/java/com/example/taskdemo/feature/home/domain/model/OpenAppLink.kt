@@ -15,4 +15,39 @@ data class OpenAppLink(
     val urlSuffix: String?,
     val app: String,
     val isFavourite: Boolean
-)
+) {
+
+    companion object {
+        fun create(
+            urlId: Long = 0L,
+            webLink: String = "",
+            smartLink: String = "",
+            title: String = "",
+            totalClicks: Int = 0,
+            originalImage: String? = null,
+            thumbnail: String? = null,
+            timesAgo: String? = null,
+            createdAt: String? = null,
+            domainId: String = "",
+            urlPrefix: String? = null,
+            urlSuffix: String? = null,
+            app: String = "",
+            isFavourite: Boolean = false
+        ) = OpenAppLink(
+            urlId,
+            webLink,
+            smartLink,
+            title,
+            totalClicks,
+            originalImage,
+            thumbnail,
+            timesAgo,
+            createdAt,
+            domainId,
+            urlPrefix,
+            urlSuffix,
+            app,
+            isFavourite
+        )
+    }
+}

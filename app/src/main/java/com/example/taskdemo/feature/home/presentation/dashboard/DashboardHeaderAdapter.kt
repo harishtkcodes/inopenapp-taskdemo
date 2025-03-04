@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.bumptech.glide.RequestManager
 import com.example.taskdemo.R
 import com.example.taskdemo.commons.util.AnimationUtil.animationListener
@@ -19,12 +20,13 @@ import com.example.taskdemo.setOnSingleClickListener
 class DashboardHeaderAdapter(
     private val glide: RequestManager,
     private val onViewAnalyticsClick: () -> Unit = {},
+    private val recycledViewPool: RecycledViewPool = RecycledViewPool(),
 ) : ListAdapter<DashboardUiModel.DashboardHeader, DashboardHeaderAdapter.ItemViewHolder>(
     DiffCallback
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder.from(parent)
+        return ItemViewHolder.from(parent, recycledViewPool)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -33,7 +35,8 @@ class DashboardHeaderAdapter(
     }
 
     class ItemViewHolder private constructor(
-        private val binding: ItemDashboardHeaderBinding
+        private val binding: ItemDashboardHeaderBinding,
+        private val recycledViewPool: RecycledViewPool,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
@@ -51,9 +54,10 @@ class DashboardHeaderAdapter(
             val analyticsAdapter = SimpleAnalyticsAdapter {
                 // TODO: handle clicks
             }.apply {
-                submitList(data.dashboardData?.asSimpleAnalyticsItems(root.context))
+                submitList(data.dashboardData.asSimpleAnalyticsItems(root.context))
             }
             analyticsOverviewList.adapter = analyticsAdapter
+            analyticsOverviewList.setRecycledViewPool(recycledViewPool)
 
             greetingLeadingIcon.clearAnimation()
             AnimationUtils.loadAnimation(root.context, R.anim.pop_enter).apply {
@@ -103,13 +107,13 @@ class DashboardHeaderAdapter(
             }
 
             companion object {
-                fun from(parent: ViewGroup): ItemViewHolder {
+                fun from(parent: ViewGroup, recycledViewPool: RecyclerView.RecycledViewPool): ItemViewHolder {
                     val binding = ItemDashboardHeaderBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
                     )
-                    return ItemViewHolder(binding)
+                    return ItemViewHolder(binding, recycledViewPool) // Pass the pool to the ViewHolder
                 }
             }
         }

@@ -181,11 +181,14 @@ dependencies {
     implementation(project(":external:MPChartLib"))
     /* END - External Projects */
 
+    // Detect memory leaks
+    debugImplementation(libs.leakcanary)
+
     // Core library
     testImplementation(libs.junit)
-    debugImplementation(testLibs.androidx.testing)
-    debugImplementation(testLibs.androidx.arch.testing)
-    debugImplementation(testLibs.androidx.fragment.testing)
+    testImplementation(testLibs.androidx.testing)
+    testImplementation(testLibs.androidx.arch.testing)
+    testImplementation(testLibs.androidx.fragment.testing)
 
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation(testLibs.androidx.test.runner)
@@ -211,6 +214,9 @@ dependencies {
 
     testImplementation(libs.hilt.android.testing)
     kaptTest(libs.hilt.compiler)
+
+    // mockk
+    testImplementation(testLibs.mock)
 
     // Coroutines testing
     testImplementation(libs.kotlinx.coroutines.test)
