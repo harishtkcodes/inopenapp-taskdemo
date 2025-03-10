@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin)
-    alias(libs.plugins.kapt)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
@@ -129,6 +128,9 @@ dependencies {
     implementation(libs.androidx.hilt.navigation)
     ksp(libs.hilt.android.compiler)
 
+    /* Room Persistence */
+    implementation(libs.bundles.room)
+
     /* Navigation Components */
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.navigation.ui.ktx)
@@ -172,6 +174,8 @@ dependencies {
     /* Time Convertor */
     implementation(libs.threetenabp)
 
+    implementation(libs.kotlinx.datetime)
+
     /* Event Bus */
     implementation(libs.eventbus)
 
@@ -210,10 +214,10 @@ dependencies {
 
     // Hilt testing
     androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.hilt.android.compiler)
+    kspAndroidTest(libs.hilt.android.compiler)
 
     testImplementation(libs.hilt.android.testing)
-    kaptTest(libs.hilt.compiler)
+    kspTest(libs.hilt.compiler)
 
     // mockk
     testImplementation(testLibs.mock)

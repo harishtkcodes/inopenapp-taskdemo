@@ -44,6 +44,7 @@ installReferrer = "2.2"
 junit = "4.13.2"
 juspay = "1.0.0-rc.01"
 kotlin = "1.9.23"
+kotlinXDateTime = "0.2.1"
 ktlint = "0.40.0"
 ktserializationJson = "1.5.1"
 ktx = "1.13.1"
@@ -173,6 +174,7 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines"}
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "ktserializationJson" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinXDateTime" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 lionscribe-libphonenumber = { module = "com.lionscribe.open.libphonenumber:libphonenumber", version.ref = "lionscribeLibphonenumber" }

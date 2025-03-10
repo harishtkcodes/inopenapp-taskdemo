@@ -5,8 +5,8 @@ import com.example.taskdemo.commons.util.NetworkResultParser
 import com.example.taskdemo.commons.util.Result
 import com.example.taskdemo.core.di.Dispatcher
 import com.example.taskdemo.core.di.TaskDemoDispatchers
-import com.example.taskdemo.feature.home.data.source.inmemory.InMemoryInOpenAppDataSource
-import com.example.taskdemo.feature.home.data.source.remote.InOpenAppRemoteDataSource
+import com.example.taskdemo.feature.home.data.source.inmemory.InMemoryDashboardDataSource
+import com.example.taskdemo.feature.home.data.source.remote.DashboardRemoteDataSource
 import com.example.taskdemo.feature.home.data.source.remote.dto.OpenAppLinkDto
 import com.example.taskdemo.feature.home.data.source.remote.dto.toOpenAppLink
 import com.example.taskdemo.feature.home.data.source.remote.model.dto.ChartKVPairDto
@@ -22,8 +22,8 @@ import javax.inject.Singleton
 
 @Singleton
 class DefaultInOpenAppRepository @Inject constructor(
-    private val localDataSource: InMemoryInOpenAppDataSource,
-    private val remoteDataSource: InOpenAppRemoteDataSource,
+    private val localDataSource: InMemoryDashboardDataSource,
+    private val remoteDataSource: DashboardRemoteDataSource,
     @Dispatcher(TaskDemoDispatchers.Io) val ioDispatcher: CoroutineDispatcher
 ) : InOpenAppRepository, NetworkResultParser {
 

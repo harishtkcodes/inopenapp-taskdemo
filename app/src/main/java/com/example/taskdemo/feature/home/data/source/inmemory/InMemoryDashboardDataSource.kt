@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 /**
  * A concrete class to hold tasks data in-memory
  */
-class InMemoryInOpenAppDataSource {
+class InMemoryDashboardDataSource {
 
     /**
      * A backing hot-flow for list of [DashboardData] for caching

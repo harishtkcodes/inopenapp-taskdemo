@@ -30,6 +30,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
 import androidx.appcompat.app.AlertDialog
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.marginBottom
@@ -135,6 +136,51 @@ fun View.showSnack(
         }
     }.also { it.show() }
     return snack
+}
+
+fun View.showSnackAnchored(
+    message: String,
+    anchorView: View,
+    isLong: Boolean = false,
+    autoCancel: Boolean = true,
+    showAction: Boolean = false,
+    actionTitle: String? = null,
+    actionCallback: (() -> Unit)? = null
+): Snackbar {
+    val length = when {
+        showAction && actionTitle?.isNotEmpty() == true -> Snackbar.LENGTH_INDEFINITE
+        isLong -> Snackbar.LENGTH_LONG
+        else -> Snackbar.LENGTH_SHORT
+    }
+
+    val snackbar = Snackbar.make(this, message, length)
+        .setAnchorView(anchorView)
+        .apply {
+            actionTitle?.let { title ->
+                setAction(title) {
+                    actionCallback?.invoke()
+                    dismiss()
+                }
+            }
+        }
+
+    (snackbar.view.layoutParams as? CoordinatorLayout.LayoutParams)?.apply {
+        anchorGravity = android.view.Gravity.TOP
+        snackbar.view.layoutParams = this
+    }
+
+    if (autoCancel) {
+        snackbar.addCallback(object : Snackbar.Callback() {
+            override fun onDismissed(transientBottomBar: Snackbar, event: Int) {
+                super.onDismissed(transientBottomBar, event)
+                // Remove the callback to prevent memory leaks
+                snackbar.removeCallback(this)
+            }
+        })
+    }
+
+    snackbar.show()
+    return snackbar
 }
 
 fun View.isSoftInputVisible(): Boolean {

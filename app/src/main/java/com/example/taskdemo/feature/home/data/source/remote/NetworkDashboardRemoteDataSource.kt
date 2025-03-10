@@ -15,13 +15,13 @@ import javax.inject.Inject
 
 private const val INOPEN_APP_BASE_URL = BuildConfig.API_URL
 
-class NetworkInOpenAppRemoteDataSource @Inject constructor(
+class NetworkDashboardRemoteDataSource @Inject constructor(
     gson: Gson,
     networkJson: Json,
     // We specifically request dagger.Lazy here, so that it's not instantiated from Dagger.
     okhttpCallFactory: Lazy<Call.Factory>,
     networkMonitor: NetworkMonitor,
-) : InOpenAppRemoteDataSource, BaseRemoteDataSource(networkMonitor) {
+) : DashboardRemoteDataSource, BaseRemoteDataSource(networkMonitor) {
 
     private val networkApi = Retrofit.Builder()
         .baseUrl(INOPEN_APP_BASE_URL)

@@ -6,16 +6,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.example.taskdemo.R
 import com.example.taskdemo.core.designsystem.component.text.EditTextState
 import com.example.taskdemo.databinding.DialogTextBoxBinding
 import com.example.taskdemo.fakeDisable
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.runBlocking
 
 class TextBoxDialog(
     private val context: Context,
@@ -60,13 +61,18 @@ class TextBoxDialog(
             inputState.onFocusChange(hasFocus)
         }
 
+        inputState.getError().onEach { error ->
+            textInputLayout.isErrorEnabled = !inputState.isValid
+            textInputLayout.error = error
+        }
+            .flowWithLifecycle(lifecycle)
+            .launchIn(lifecycleScope)
+
         btnSend.setIconResource(endIconRes)
         btnSend.fakeDisable(!inputState.isValid)
         btnSend.setOnClickListener {
             if (!inputState.isValid) {
                 inputState.enableShowErrors(true)
-                textInputLayout.isErrorEnabled = !inputState.isValid
-                textInputLayout.error = runBlocking(Dispatchers.IO) { inputState.getError().firstOrNull() }
             } else {
                 onSend()
                 dismiss()

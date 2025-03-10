@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @Qualifier
 annotation class RepositorySource(val repositorySource: RepositorySources)
 
-enum class RepositorySources { Default, RemoteOnly, Fake }
+enum class RepositorySources { Default, RemoteOnly, OfflineFirst, Fake }
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -1,6 +1,5 @@
 package com.example.taskdemo.feature.home.presentation.dashboard
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -174,6 +173,7 @@ class DashboardViewModel @Inject constructor(
 
                 is Result.Error -> {
                     setLoading(LoadType.REFRESH, LoadState.Error(result.exception))
+                    Timber.e(result.exception, "Error refreshing dashboard data")
                 }
 
                 is Result.Success -> {

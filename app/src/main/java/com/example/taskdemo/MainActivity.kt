@@ -59,6 +59,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 import java.lang.ref.WeakReference
+import java.util.concurrent.BlockingQueue
 
 enum class WindowSizeClass { COMPACT, MEDIUM, EXPANDED }
 
@@ -293,9 +294,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             if (isOffline) {
                 val bottomNavigationShown = !sharedViewModel.myBottomAppBarStateState.value.hidden
                 offlineSnackBarWeakRef = WeakReference(
-                    binding.root.showSnack(
+                    binding.root.showSnackAnchored(
                         message = getString(R.string.you_are_offline_showing_limited_content),
-                        withBottomNavigation = bottomNavigationShown,
+                        anchorView = binding.appBottomNavigationView,
                         autoCancel = false,
                         showAction = true,
                         actionTitle = getString(R.string.label_ok),

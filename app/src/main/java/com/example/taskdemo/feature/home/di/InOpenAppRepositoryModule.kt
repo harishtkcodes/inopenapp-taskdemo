@@ -4,9 +4,12 @@ import com.example.taskdemo.core.di.RepositorySource
 import com.example.taskdemo.core.di.RepositorySources
 import com.example.taskdemo.feature.home.data.repository.DefaultInOpenAppRepository
 import com.example.taskdemo.feature.home.data.repository.FakeOpenInAppRepository
-import com.example.taskdemo.feature.home.data.source.inmemory.InMemoryInOpenAppDataSource
-import com.example.taskdemo.feature.home.data.source.remote.InOpenAppRemoteDataSource
-import com.example.taskdemo.feature.home.data.source.remote.NetworkInOpenAppRemoteDataSource
+import com.example.taskdemo.feature.home.data.repository.OfflineFirstInOpenAppRepository
+import com.example.taskdemo.feature.home.data.source.inmemory.InMemoryDashboardDataSource
+import com.example.taskdemo.feature.home.data.source.local.DashboardLocalDataSource
+import com.example.taskdemo.feature.home.data.source.local.RoomDashboardLocalDataSource
+import com.example.taskdemo.feature.home.data.source.remote.DashboardRemoteDataSource
+import com.example.taskdemo.feature.home.data.source.remote.NetworkDashboardRemoteDataSource
 import com.example.taskdemo.feature.home.domain.repository.InOpenAppRepository
 import dagger.Binds
 import dagger.Module
@@ -32,15 +35,26 @@ interface InOpenAppRepositoryModule {
     ): InOpenAppRepository
 
     @Binds
+    @RepositorySource(RepositorySources.OfflineFirst)
+    fun bindsOfflineFirstInOpenAppRepository(
+        inOpenAppRepository: OfflineFirstInOpenAppRepository
+    ): InOpenAppRepository
+
+    @Binds
     fun bindsInOpenAppRemoteDataSource(
-        inOpenAppRemoteDataSource: NetworkInOpenAppRemoteDataSource
-    ): InOpenAppRemoteDataSource
+        inOpenAppRemoteDataSource: NetworkDashboardRemoteDataSource
+    ): DashboardRemoteDataSource
+
+    @Binds
+    fun bindsInOpenAppLocalDataSource(
+        inOpenAppLocalDataSource: RoomDashboardLocalDataSource
+    ): DashboardLocalDataSource
 
     companion object {
         @Provides
         @Singleton
-        fun providesInMemoryDataSource(): InMemoryInOpenAppDataSource =
-            InMemoryInOpenAppDataSource()
+        fun providesInMemoryDataSource(): InMemoryDashboardDataSource =
+            InMemoryDashboardDataSource()
     }
 
 }
